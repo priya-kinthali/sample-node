@@ -1,22 +1,15 @@
 {
-  "name": "sample-node",
+  "name": "nodejs-deploytest",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is Demo application",
   "main": "index.js",
   "scripts": {
+
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/priyagupta108/sample-node.git"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2"
-  },
-  "bugs": {
-    "url": "https://github.com/priyagupta108/sample-node/issues"
-  },
-  "homepage": "https://github.com/priyagupta108/sample-node#readme"
+  }
 }
