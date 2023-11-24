@@ -1,5 +1,5 @@
 {
-  "name": "sample-node",
+  "name": "@priya-kinthali/sample-node",
   "version": "1.0.0",
   "description": "sample-node application",
   "main": "index.js",
