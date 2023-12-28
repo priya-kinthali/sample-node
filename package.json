@@ -4,7 +4,8 @@
   "description": "sample-node application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" "
+    "test": "echo \"Error: no test specified\" ",
+    "postinstall": "node index.js"
   },
   "author": "",
   "license": "ISC",
