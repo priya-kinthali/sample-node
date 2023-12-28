@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - main
+      - setupnode-902
   workflow_dispatch:
 
 jobs:
@@ -14,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: priya-kinthali/setup-node@poc-build
+      - uses: priya-kinthali/setup-node
         with:
           node-version: 16
       - run: npm ci
