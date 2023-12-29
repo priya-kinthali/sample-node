@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" ",
-    "postinstall": "node index.js"
+    "postinstall": "echo 'postinstall script ran!'"
   },
   "author": "",
   "license": "ISC",
