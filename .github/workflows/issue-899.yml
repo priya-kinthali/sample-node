@@ -1,175 +1,27 @@
-name: CI
+name: Reproduce Setup Error
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  get-build-packages:
+  reproduce-error:
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/setup
-      - id: set-matrix
-        run: npx tsx ./scripts/getMonorepoPackageNames.ts build
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  build:
-    needs: get-build-packages
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        package-name: ${{ fromJson(needs.get-build-packages.outputs.matrix) }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/setup
-      - working-directory: ./packages/${{ matrix.package-name }}
-        run: npm run build
-      - name: Store the docs build directory
-        if: ${{ matrix.package-name == 'docs' }}
-        uses: actions/upload-artifact@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          name: docs-build
-          path: ./packages/docs/build
+          node-version: '20'  # replace with your desired version
 
-  get-lint-packages:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/setup
-      - id: set-matrix
-        run: npx tsx ./scripts/getMonorepoPackageNames.ts lint
+      - name: Install Yarn
+        run: npm install -g yarn
 
-  lint:
-    needs: get-lint-packages
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        package-name: ${{ fromJson(needs.get-lint-packages.outputs.matrix) }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/setup
-      - working-directory: ./packages/${{ matrix.package-name }}
-        run: npm run lint
+      - name: Install dependencies
+        run: yarn install
 
-  get-test-packages:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/setup
-      - id: set-matrix
-        run: npx tsx ./scripts/getMonorepoPackageNames.ts test
-
-  test:
-    needs: get-test-packages
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        package-name: ${{ fromJson(needs.get-test-packages.outputs.matrix) }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/setup
-      - working-directory: ./packages/${{ matrix.package-name }}
-        # We specify custom Node.js options in order to increase the memory size, since GitHub
-        # Actions can fail with the following error when doing the `eslint-plugin-isaacscript`
-        # tests:
-        # FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory
-        run: NODE_OPTIONS='--max-old-space-size=8192' npm run test
-
-  unused:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/setup
-      #- name: Check for unused files, dependencies, and exports
-      #  run: npx knip
-
-  format:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/setup
-      - run: npx prettier --log-level=warn --check .
-
-  spell-check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/setup
-      - run: npx cspell --no-progress --no-summary .
-      - run: npx cspell-check-unused-words
-
-  package-json-lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/setup
-      - run: npm run package-json-lint .
-
-  docs-deploy:
-    needs: [build, lint, test, unused, format, spell-check, package-json-lint]
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && needs.pr-check.outputs.number != 'null'
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/setup
-
-      - name: Retrieve the docs build directory
-        uses: actions/download-artifact@v3
-        with:
-          name: docs-build
-          path: ./packages/docs/build
-
-      - name: Checkout the docs repository
-        uses: actions/checkout@v4
-        with:
-          ssh-key: ${{ secrets.DOCS_SSH_PRIVATE_KEY }}
-          repository: IsaacScript/isaacscript.github.io
-          ref: gh-pages
-          # The current working directory is:
-          # /home/runner/work/isaacscript/isaacscript
-          # Thus, the following path is equivalent to:
-          # /home/runner/work/isaacscript/isaacscript/isaacscript.github.io
-          # (It is not possible to clone the repo in the parent directory for security reasons.)
-          path: isaacscript.github.io
-
-      - name: Deploy the documentation website
-        id: deploy_documentation_website
-        run: npx tsx ./packages/docs/scripts/deploy.mts ${{ github.sha }}
-
-      - name: Run DocSearch Scraper
-        uses: celsiusnarhwal/typesense-scraper@v2
-        if: steps.deploy_documentation_website.outputs.SHOULD_SCRAPE == '1'
-        with:
-          api-key: ${{ secrets.TYPESENSE_API_KEY }}
-          host: ${{ secrets.TYPESENSE_HOST }}
-          port: ${{ secrets.TYPESENSE_PORT }}
-          protocol: ${{ secrets.TYPESENSE_PROTOCOL }}
-          config: packages/docs/docsearch.config.json
-
-  discord:
-    name: Discord Failure Notification
-    needs:
-      [
-        build,
-        lint,
-        test,
-        unused,
-        format,
-        spell-check,
-        package-json-lint,
-        docs-deploy,
-      ]
-    if: always() # This is needed to always run this job, even if the other jobs fail.
-    runs-on: ubuntu-latest
-    steps:
-      - uses: technote-space/workflow-conclusion-action@v3
-      - if: env.WORKFLOW_CONCLUSION != 'success' && env.WORKFLOW_CONCLUSION != 'cancelled'
-        uses: sarisia/actions-status-discord@v1
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          status: ${{ env.WORKFLOW_CONCLUSION }}
-          title: ""
+      # Add other steps as needed
