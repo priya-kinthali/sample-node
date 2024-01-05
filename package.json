@@ -13,6 +13,7 @@
     "express": "^4.18.2",
     "serverless": "^3.37.0",
     "serverless-bundle": "^6.0.0",
-    "yarn": "^1.22.21"
+    
+    "yarn": "4.0.2"
   }
 }
