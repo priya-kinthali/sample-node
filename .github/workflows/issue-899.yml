@@ -18,7 +18,8 @@ jobs:
       #   run: npm install -g yarn
 
       - name: Install dependencies
-        run: yarn install --immutable --immutable-cache --check-cache
+        run: yarn install --immutable --skip-builds
+        # run: yarn install --immutable --immutable-cache --check-cache
         # run: yarn install
 
       # Add other steps as needed
