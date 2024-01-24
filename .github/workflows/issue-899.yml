@@ -14,10 +14,10 @@ jobs:
           node-version: '20'  # replace with your desired version
       # - name: Enable Corepack
       #   run: corepack enable
-      # - name: Install Yarn
-      #   run: npm install -g yarn@1.22.19
+      - name: Install Yarn
+        run: npm install -g yarn@1.22.19
 
-      - name: Install dependencies
-        run: yarn install
+      # - name: Install dependencies
+      #   run: yarn install
 
       # Add other steps as needed
