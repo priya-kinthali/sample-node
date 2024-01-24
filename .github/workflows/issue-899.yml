@@ -20,6 +20,16 @@ jobs:
       #   run: yarn --version
   
 
+      # - name: Install dependencies
+      #   run: yarn install
+      - name: Set up Yarn
+        run: |
+           npm uninstall -g yarn
+           npm install -g yarn@1.22.19
+
+      - name: Check Yarn version
+        run: yarn --version
+      
       - name: Install dependencies
         run: yarn install
 
