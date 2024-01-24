@@ -20,7 +20,7 @@ jobs:
       #   run: yarn --version
   
 
-      # - name: Install dependencies
-      #   run: yarn install
+      - name: Install dependencies
+        run: yarn install
 
       # Add other steps as needed
