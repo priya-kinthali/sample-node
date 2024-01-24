@@ -16,6 +16,9 @@ jobs:
       #   run: corepack enable
       - name: Install Yarn
         run: npm install -g yarn
+      - name: Check Yarn version
+        run: yarn --version
+  
 
       # - name: Install dependencies
       #   run: yarn install
