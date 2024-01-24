@@ -12,8 +12,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'  # replace with your desired version
-      # - name: Enable Corepack
-      #   run: corepack enable
+      - name: Enable Corepack
+        run: corepack enable
       # - name: Install Yarn
       #   run: npm install -g yarn@1.22.19
       # - name: Check Yarn version
@@ -22,15 +22,16 @@ jobs:
 
       # - name: Install dependencies
       #   run: yarn install
-      - name: Set up Yarn
-        run: |
-           npm uninstall -g yarn
-           npm install -g yarn@1.22.19
+      # - name: Set up Yarn
+      #   run: |
+      #      npm uninstall -g yarn
+      #      npm install -g yarn@1.22.19
 
-      - name: Check Yarn version
-        run: yarn --version
+      
       
       - name: Install dependencies
         run: yarn install
+      - name: Check Yarn version
+        run: yarn --version
 
       # Add other steps as needed
