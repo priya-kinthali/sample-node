@@ -7,6 +7,10 @@
     "test": "echo \"Error: no test specified\" ",
     "postinstall": "echo 'postinstall script ran!'"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/priya-kinthali/sample-node"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
