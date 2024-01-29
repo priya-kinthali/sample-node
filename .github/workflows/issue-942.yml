@@ -20,7 +20,7 @@ jobs:
           yarn config set npmScopes.my-org.npmAlwaysAuth true
           yarn config set npmScopes.my-org.npmAuthToken $NPM_AUTH_TOKEN
       env:
-          NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.PUBLISH_GITHUB_TOKEN }}
     - run: yarn workspaces focus --all --production
     - run: yarn npm publish 
       
