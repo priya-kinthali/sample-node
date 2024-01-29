@@ -14,23 +14,16 @@ jobs:
       with:
         node-version: 20
         cache: 'yarn'
-        # registry-url: https://npm.pkg.github.com/priya-kinthali
-    # - name: Install Yarn
-    #   run: npm install -g yarn
     - name: Install Yarn
       run: npm install -g yarn  
     - name: Initialize Yarn package
       run: yarn init -y 
-    
-    
-      
-    
-      
     - run: yarn install --production
     - run: yarn publish
-    - name: Check env variable
-      run: echo "Token set? ${NODE_AUTH_TOKEN:+yes}"
       env:
         NODE_AUTH_TOKEN: "${{secrets.PUBLISH_GITHUB_TOKEN}}"
+    - name: Check env variable
+      run: echo "Token set? ${NODE_AUTH_TOKEN:+yes}"
+      
  
       
