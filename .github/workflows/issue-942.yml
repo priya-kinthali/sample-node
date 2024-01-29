@@ -21,7 +21,7 @@ jobs:
     - run: yarn install --production
     - run: yarn publish
       env:
-        NODE_AUTH_TOKEN: "${{secrets.PUBLISH_GITHUB_TOKEN}}"
+        NODE_AUTH_TOKEN: "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"
     - name: Check env variable
       run: echo "Token set? ${NODE_AUTH_TOKEN:+yes}"
       
