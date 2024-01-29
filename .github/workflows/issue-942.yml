@@ -14,7 +14,10 @@ jobs:
       with:
         node-version: 20
         cache: 'yarn'
-        registry-url: https://npm.pkg.github.com/priya-kinthali
+        # registry-url: https://npm.pkg.github.com/priya-kinthali
+    - name: Initialize NPM with scope
+        run: npm init -y --scope ${{ github.repository_owner }}
+      
     - run: yarn workspaces focus --all --production
     - run: yarn npm publish
       env:
