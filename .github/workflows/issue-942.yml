@@ -4,8 +4,6 @@ on: [push]
 jobs:
   publish-gpr:
     runs-on: ubuntu-latest
-    env:
-        NODE_AUTH_TOKEN: "${{secrets.PUBLISH_GITHUB_TOKEN}}"
     permissions:
       contents: read
       packages: write
@@ -16,14 +14,11 @@ jobs:
       with:
         node-version: 20
         cache: 'yarn'
-    - name: Install Yarn
-      run: npm install -g yarn  
-    - name: Initialize Yarn package
-      run: yarn init -y 
-    - run: yarn install --production
+        registry-url: https://npm.pkg.github.com/
+    - run: yarn workspaces focus --all --production
     - run: yarn npm publish 
-      # env:
-      #   NODE_AUTH_TOKEN: "${{secrets.PUBLISH_GITHUB_TOKEN}}"
+      env:
+        NODE_AUTH_TOKEN: "${{secrets.PUBLISH_GITHUB_TOKEN}}"
     - name: Check env variable
       run: echo "Token set? ${NODE_AUTH_TOKEN:+yes}"
       
