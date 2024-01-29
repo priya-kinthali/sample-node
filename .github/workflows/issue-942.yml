@@ -21,7 +21,7 @@ jobs:
           yarn config set npmScopes.my-org.npmAuthToken $NPM_AUTH_TOKEN
       env:
           NPM_AUTH_TOKEN: ${{ secrets.PUBLISH_GITHUB_TOKEN }}
-    - run: yarn workspaces focus --all --production
+    # - run: yarn workspaces focus --all --production
     - run: yarn publish 
       
     - name: Check env variable
