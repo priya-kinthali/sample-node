@@ -21,7 +21,7 @@ jobs:
     - name: Initialize Yarn package
       run: yarn init -y 
     - run: yarn install --production
-    - run: yarn publish 
+    - run: yarn npm publish 
       # env:
       #   NODE_AUTH_TOKEN: "${{secrets.PUBLISH_GITHUB_TOKEN}}"
     - name: Check env variable
