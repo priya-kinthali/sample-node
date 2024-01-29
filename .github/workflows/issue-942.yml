@@ -15,8 +15,17 @@ jobs:
         node-version: 20
         cache: 'yarn'
         # registry-url: https://npm.pkg.github.com/priya-kinthali
-    - name: Initialize NPM with scope
-      run: npm init -y --scope ${{ github.repository_owner }}
+    
+    - name: Install jq
+      run: sudo apt-get install jq
+      
+    - name: Initialize Yarn package
+      run: yarn init -y
+      
+    - name: Add scope to package name
+      run: |
+          jq '.name = "@${{ github.repository_owner }}/' + .name + '"' package.json > temp.json
+          mv temp.json package.json
       
     - run: yarn workspaces focus --all --production
     - run: yarn npm publish
