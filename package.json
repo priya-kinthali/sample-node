@@ -1,5 +1,5 @@
 {
-  "name": "@priyagupta18/sample-node-test",
+  "name": "@${{ github.repository_owner }}/SAMPLE-NODE",
   "version": "1.0.0",
   "description": "sample-node application",
   "main": "index.js",
