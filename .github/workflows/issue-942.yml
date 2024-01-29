@@ -4,6 +4,8 @@ on: [push]
 jobs:
   publish-gpr:
     runs-on: ubuntu-latest
+    env:
+        NODE_AUTH_TOKEN: "${{secrets.PUBLISH_GITHUB_TOKEN}}"
     permissions:
       contents: read
       packages: write
@@ -20,8 +22,8 @@ jobs:
       run: yarn init -y 
     - run: yarn install --production
     - run: yarn publish 
-      env:
-        NODE_AUTH_TOKEN: "${{secrets.PUBLISH_GITHUB_TOKEN}}"
+      # env:
+      #   NODE_AUTH_TOKEN: "${{secrets.PUBLISH_GITHUB_TOKEN}}"
     - name: Check env variable
       run: echo "Token set? ${NODE_AUTH_TOKEN:+yes}"
       
