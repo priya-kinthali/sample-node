@@ -15,6 +15,7 @@ jobs:
         node-version: 20
         cache: 'yarn'
         registry-url: https://npm.pkg.github.com/
+        scope: '@priya-kinthali'
     - run: yarn workspaces focus --all --production
     - run: yarn npm publish 
       env:
