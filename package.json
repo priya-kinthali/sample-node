@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" ",
-    "postinstall": "echo 'postinstall script ran!'"
+    "postinstall": "echo 'postinstall script ran!'",
+    "publish": "yarn npm publish"
   },
   "repository": {
     "type": "git",
