@@ -15,8 +15,8 @@ jobs:
         node-version: 20
         cache: 'yarn'
         # registry-url: https://npm.pkg.github.com/priya-kinthali
-    - name: Install Yarn
-      run: npm install -g yarn
+    # - name: Install Yarn
+    #   run: npm install -g yarn
       
     - name: Initialize Yarn package
       run: yarn init -y 
