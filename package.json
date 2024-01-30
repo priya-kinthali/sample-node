@@ -1,6 +1,6 @@
 {
   "name": "@priya-kinthali/sample-node",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "description": "sample-node application",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,9 @@
  
   "author": "",
   "license": "ISC",
-  
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/priya-kinthali"
+  },
   "dependencies": {
     "express": "^4.18.2",
     "serverless": "^3.37.0",
