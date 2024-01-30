@@ -20,12 +20,16 @@ jobs:
         always-auth: true
       env:
           NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_GITHUB_TOKEN }}
+    - name: Install Yarn
+      run: npm install -g yarn
     - name: Check env variable
       run: echo "Token set? ${NODE_AUTH_TOKEN:+yes}"
     - run: yarn workspaces focus --all --production
-    - run: yarn npm publish 
+    - name: Publish to npm
       env:
           NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_GITHUB_TOKEN }}
+      run: yarn publish 
+      
     
       
  
