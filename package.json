@@ -8,10 +8,7 @@
     "postinstall": "echo 'postinstall script ran!'",
     "publish": "yarn npm publish"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/priya-kinthali/sample-node"
-  },
+ 
   "author": "",
   "license": "ISC",
   "publishConfig": {
