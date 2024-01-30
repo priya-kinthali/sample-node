@@ -14,13 +14,16 @@ jobs:
       with:
         node-version: 20
         cache: 'yarn'
-        registry-url: https://npm.pkg.github.com/priya-kinthali
+        # registry-url: https://npm.pkg.github.com/priya-kinthali
+        registry-url: https://npm.pkg.github.com
         scope: '@priya-kinthali'
         always-auth: true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_GITHUB_TOKEN }}
     - run: yarn workspaces focus --all --production
     - run: yarn npm publish 
       env:
-          PUBLISH_GITHUB_TOKEN: ${{ secrets.PUBLISH_GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_GITHUB_TOKEN }}
     - name: Check env variable
       run: echo "Token set? ${NODE_AUTH_TOKEN:+yes}"
       
