@@ -23,7 +23,9 @@ jobs:
     - name: Check env variable
       run: echo "Token set? ${NODE_AUTH_TOKEN:+yes}"
     - run: yarn workspaces focus --all --production
-    - run: yarn publish 
+    - run: |
+           yarn publish
+           unset NPM_CONFIG_USERCONFIG 
       env:
           NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_GITHUB_TOKEN }}
     
