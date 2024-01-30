@@ -29,9 +29,9 @@ jobs:
     - run: yarn workspaces focus --all --production
     - run: |
            yarn npm publish
-           unset NPM_CONFIG_USERCONFIG 
-      env:
-          NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_GITHUB_TOKEN }}
+          #  unset NPM_CONFIG_USERCONFIG 
+      # env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_GITHUB_TOKEN }}
     
       
  
