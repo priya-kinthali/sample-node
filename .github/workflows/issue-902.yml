@@ -5,7 +5,7 @@
 
  jobs:
    build:
-     runs-on: ubuntu-latest
+     runs-on: self-hosted
 
      steps:
      - uses: actions/checkout@v3
@@ -18,3 +18,7 @@
      - run: yarn install --frozen-lockfile
 
      - run: yarn postinstall
+     - name: "rate limit"
+       run: |
+          curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/rate_limit
+
