@@ -15,7 +15,7 @@
          node-version: 18
          # cache: 'yarn'
 
-     # - run: yarn install --frozen-lockfile
+     # - run: yarn install --frozen-lockfilee
      # - run: yarn postinstall
      - name: "rate limit"
        run: |
