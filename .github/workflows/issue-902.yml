@@ -15,9 +15,9 @@
          node-version: 18
          cache: 'yarn'
 
-     - run: yarn install --frozen-lockfile
+     # - run: yarn install --frozen-lockfile
 
-     - run: yarn postinstall
+     # - run: yarn postinstall
      - name: "rate limit"
        run: |
           curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/rate_limit
