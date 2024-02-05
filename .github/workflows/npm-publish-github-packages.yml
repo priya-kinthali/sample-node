@@ -6,7 +6,7 @@ name: github Package
 on:
   push:
     branches:
-      - npm-github-publish
+      - checknpmpublish-v3
   
 
 jobs:
