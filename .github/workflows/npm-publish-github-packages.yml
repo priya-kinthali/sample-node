@@ -35,7 +35,8 @@ jobs:
         run: echo ${RUNNER_TEMP}
       - name: Check .npmrc
         run: |
-            cat ${RUNNER_TEMP}/.npmrc || echo ".npmrc doesn't exist"
+            test -f D:/a/_temp/.npmrc && echo ".npmrc exists" || echo ".npmrc does not exist"
+
       - run: npm ci
       - run: npm publish
         env:
