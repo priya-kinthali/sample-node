@@ -31,6 +31,8 @@ jobs:
           registry-url: https://npm.pkg.github.com
       # - name: Initialize NPM with scope
       #   run: npm init -y --scope ${{ github.repository_owner }}
+      - name: Inspect environment variables
+        run: echo ${RUNNER_TEMP}
       - name: Check .npmrc
         run: |
             cat ${RUNNER_TEMP}/.npmrc || echo ".npmrc doesn't exist"
