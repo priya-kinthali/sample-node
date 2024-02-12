@@ -16,10 +16,11 @@ jobs:
         with: 
           node-version: '20.x'
           cache: 'yarn'
+      - run: corepack enable
+      - uses: actions/setup-node@v4
       - name: Install Dependencies
         run: npm install -g yarn
-      - name: Generate Yarn.lock file
-        run: yarn
+      
 
 
 
