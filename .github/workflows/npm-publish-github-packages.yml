@@ -23,8 +23,8 @@ jobs:
       - name: Cache dependencies
         uses: actions/cache@v4
         with:
-           path: SAMPLE-NODE
-           key: Ubuntu-build-${{ github.run_id }}
+           path: node_modules
+           key: Ubuntu-build-${{ hashFiles('**/yarn.lock') }}
            restore-keys: |
               Ubuntu-build-
       
