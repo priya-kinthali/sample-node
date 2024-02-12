@@ -23,11 +23,10 @@ jobs:
       - name: Cache dependencies
         uses: actions/cache@v4
         with:
-           path: path/to/directory
-           key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+           path: SAMPLE-NODE
+           key: Ubuntu-build-${{ github.run_id }}
            restore-keys: |
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+              Ubuntu-build-
       
 
 
