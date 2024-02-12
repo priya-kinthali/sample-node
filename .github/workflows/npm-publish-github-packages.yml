@@ -18,6 +18,8 @@ jobs:
           cache: 'yarn'
       - name: Install Dependencies
         run: npm install -g yarn
+      - name: Generate Yarn.lock file
+        run: yarn
 
 
 
