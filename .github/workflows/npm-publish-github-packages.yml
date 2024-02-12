@@ -16,6 +16,8 @@ jobs:
         with: 
           node-version: '20.x'
           cache: 'yarn'
+      - name: Install Dependencies
+        run: yarn install
 
 
 
