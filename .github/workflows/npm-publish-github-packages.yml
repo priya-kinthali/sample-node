@@ -20,6 +20,14 @@ jobs:
       
       - name: Install Dependencies
         run: npm install -g yarn
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+           path: path/to/directory
+           key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+           restore-keys: |
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
       
 
 
