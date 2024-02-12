@@ -21,7 +21,7 @@ jobs:
       - name: Install Dependencies
         run: npm install -g yarn
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
            path: path/to/directory
            key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
