@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'yarn'
-      - run: yarn install -g yarn
+      - run: npm install -g yarn
       - run: yarn test
       
       # - name: Install Dependencies
