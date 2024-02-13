@@ -17,6 +17,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'yarn'
+      - run: corepack enable
       - run: npm install -g yarn
       - run: yarn test
       
