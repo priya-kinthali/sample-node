@@ -19,6 +19,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'yarn'
+      - run: yarn install
       # - run: echo "YARN_CACHE_FOLDER=$(yarn config get cacheFolder)" >> $GITHUB_ENV
 
       # - run: corepack enable
