@@ -15,9 +15,9 @@ jobs:
       - run: corepack enable
       - uses: actions/setup-node@v4
         with:
-          node-version: '14'
+          node-version: '20'
           cache: 'yarn'
-      - run: yarn install --frozen-lockfile # optional, --immutable
+      - run: yarn install --frozen-lockfile
       - run: yarn test
       
       # - name: Install Dependencies
