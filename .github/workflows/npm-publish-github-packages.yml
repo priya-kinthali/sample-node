@@ -13,12 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: corepack enable
+      - run: npm install -g yarn
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'yarn'
       # - run: corepack enable
-      - run: npm install -g yarn
+      # - run: npm install -g yarn
       # - run: yarn test
       
       # - name: Install Dependencies
