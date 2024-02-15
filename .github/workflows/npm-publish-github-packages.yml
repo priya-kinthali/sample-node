@@ -6,8 +6,7 @@ name: github Package
 on:
   push:
     branches:
-      - npm-github-publish
-  
+      - yarn-policy-956
 
 jobs:
   build:
@@ -17,31 +16,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci
-      - run: npm test
-
-  publish-npm:
-    needs: build
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 16
-          registry-url: https://npm.pkg.github.com
-      # - name: Initialize NPM with scope
-      #   run: npm init -y --scope ${{ github.repository_owner }}
-      - name: Inspect environment variables
-        run: echo ${RUNNER_TEMP}
-      - name: Check .npmrc
-        run: |
-            test -f D:/a/_temp/.npmrc && echo ".npmrc exists" || echo ".npmrc does not exist"
-
-      - run: npm ci
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.PUBLISH_GITHUB_TOKEN}}
-
+          cache: 'yarn'
+     
+ 
 
 
  
