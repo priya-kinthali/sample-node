@@ -6,7 +6,7 @@ name: github Package
 on:
   push:
     branches:
-      - yarn-policy-956
+      - test-toolversion
 
 jobs:
   build:
@@ -16,6 +16,7 @@ jobs:
       - uses: priya-kinthali/setup-node@test-toolversion
         with:
           node-version: 20
+          node-version-file : '.tool-versions'
           cache: 'yarn'
       - run: yarn install
      
