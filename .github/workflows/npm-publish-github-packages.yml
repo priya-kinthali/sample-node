@@ -13,9 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: priya-kinthali/setup-node@test-toolversion
         with:
-          node-version: 20
+          node-version: 16
           cache: 'yarn'
       - run: yarn install
      
