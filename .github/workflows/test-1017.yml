@@ -11,7 +11,12 @@ on:
 
 jobs:
   build:
-    runs-on: ['macos-14-large','macos-latest-large']
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest-large,macos-14-large]
+       
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
