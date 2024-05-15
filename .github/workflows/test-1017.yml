@@ -1,0 +1,30 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
+
+name: Attempting to download
+
+on:
+  push:
+    branches:
+      - 1017-version-notfound
+  
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: priya-kinthali/setup-node@poc-build
+        with:
+          node-version: 14
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm test
+
+ 
+
+
+
+   
+
+    
