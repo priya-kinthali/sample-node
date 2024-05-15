@@ -14,7 +14,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: priya-kinthali/setup-node@poc-build
+      - uses: actions/setup-node@v4
         with:
           node-version: 14
       - run: npm ci
