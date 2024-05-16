@@ -25,7 +25,7 @@ jobs:
         cache: 'npm'
         node-version-file: '.tool-versions'
         
-    - run: npm install
+    - run: npm ci
  
 
 
