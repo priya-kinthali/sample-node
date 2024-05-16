@@ -1,15 +1,11 @@
 {
-  "name": "@priyagupta18/sample-node-test",
+  "name": "sample-node",
   "version": "1.0.0",
-  "description": "sample-node application",
+  "description": "testing",
   "main": "index.js",
   "scripts": {
-
-    "test": "echo \"Error: no test specified\" "
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.18.2"
-  }
+  "license": "ISC"
 }
