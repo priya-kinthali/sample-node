@@ -22,10 +22,10 @@ jobs:
     - name: Setup Node (prism)
       uses: actions/setup-node@v4
       with:
-        cache: 'npm'
+        cache: npm
         node-version-file: '.tool-versions'
         
-    - run: npm ci
+    - run: npm install
  
 
 
