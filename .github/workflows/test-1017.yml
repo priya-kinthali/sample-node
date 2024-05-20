@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         # os: [macos-latest-large,macos-14-large]
-        os: [macos-latest-large]
+        os: [macos-14-large]
        
     steps:
       - uses: actions/checkout@v4
