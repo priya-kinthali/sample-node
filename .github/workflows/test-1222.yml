@@ -22,10 +22,12 @@ jobs:
       with:
         node-version: '20.18.2'
         cache: 'pnpm'
+    - name: Check Node.js version
+      run: node -v
 
-    - name: Install pnpm
-      run: npm install -g pnpm@9
+    # - name: Install pnpm
+    #   run: npm install -g pnpm@9
 
-    - name: Install dependencies
-      run: pnpm install
+    # - name: Install dependencies
+    #   run: pnpm install
 
