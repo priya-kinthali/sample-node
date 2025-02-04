@@ -1,6 +1,3 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
-# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
-
 name: Test corepack error-1222
 
 on:
@@ -16,26 +13,25 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-    - uses: pnpm/action-setup@v4
-      with:
-         version: 9
-
+    # - uses: pnpm/action-setup@v4
+    #   with:
+    #      version: 9
+    - name: Check pnpm version
+      run: pnpm -v
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20.18.2'
-        cache: 'pnpm'
-    - name: Enable Corepack
-      run: corepack enable
+        # cache: 'pnpm'
+    # - name: Enable Corepack
+    #   run: corepack enable
+    - name: Check pnpm version
+      run: pnpm -v
     - name: Check Node.js version
       run: node -v
 
     - name: Install dependencies
       run: pnpm install
 
-    # - name: Install pnpm
-    #   run: npm install -g pnpm@9
 
-    # - name: Install dependencies
-    #   run: pnpm install
 
