@@ -16,8 +16,8 @@ jobs:
     # - uses: pnpm/action-setup@v4
     #   with:
     #      version: 9
-    - name: Check pnpm version
-      run: pnpm -v
+    # - name: Check pnpm version
+    #   run: pnpm -v
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
