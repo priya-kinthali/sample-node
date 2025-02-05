@@ -13,18 +13,20 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-    - uses: pnpm/action-setup@v4
-      with:
-         version: 9
-    - name: Check pnpm version
-      run: pnpm -v
+    # - uses: pnpm/action-setup@v4
+    #   with:
+    #      version: 9
+    # - name: Check pnpm version
+    #   run: pnpm -v
     - name: Setup Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v4.1.0
       with:
         node-version: '20.18.2'
         # cache: 'pnpm'
     - name: Enable Corepack
-      run: npm i -g --force corepack && corepack enable
+      run: corepack enable
+    # - name: Enable Corepack
+    #   run: npm i -g --force corepack && corepack enable
     - name: Check pnpm version
       run: pnpm -v
     - name: Check Node.js version
