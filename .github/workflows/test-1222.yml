@@ -17,9 +17,9 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-    # - uses: pnpm/action-setup@v4 # different
-    #   with:
-    #      version: 9
+    - uses: pnpm/action-setup@v4 # different
+      with:
+         version: 9
     # - name: Check pnpm version
     #   run: pnpm -v
     # - name: Check Node.js version
