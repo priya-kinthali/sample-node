@@ -31,10 +31,10 @@ jobs:
       with:
         node-version: '20.18.2'
         # cache: 'pnpm'
-    - name: Check Corepack version
-      run: corepack -v
-    - name: Enable Corepack
-      run: corepack enable
+    # - name: Check Corepack version
+    #   run: corepack -v
+    # - name: Enable Corepack
+    #   run: corepack enable
     # - name: Enable Corepack
     #   run: npm i -g --force corepack && corepack enable
     - name: Check pnpm version
