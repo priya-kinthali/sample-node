@@ -22,7 +22,8 @@ jobs:
     #      version: 9
     # - name: Check pnpm version
     #   run: pnpm -v
-
+    - name: Check Node.js version
+      run: node -v
     - name: Check Corepack version
       run: corepack -v
     - name: Setup Node.js
