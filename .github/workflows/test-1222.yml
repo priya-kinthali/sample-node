@@ -22,14 +22,14 @@ jobs:
     #      version: 9
     # - name: Check pnpm version
     #   run: pnpm -v
-    - name: Check Node.js version
-      run: node -v
-    - name: Check Corepack version
-      run: corepack -v
+    # - name: Check Node.js version
+    #   run: node -v
+    # - name: Check Corepack version
+    #   run: corepack -v
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '22.13.1'
+        node-version: '20.18.2'
         # cache: 'pnpm'
     - name: Check Corepack version
       run: corepack -v
