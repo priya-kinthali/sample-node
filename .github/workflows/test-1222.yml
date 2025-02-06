@@ -46,6 +46,7 @@ jobs:
     # - name: Enable Corepack
     #   run: corepack enable
     - name: Enable Corepack
+      if: runner.os != 'Windows'
       run: npm i -g --force corepack && corepack enable
     - name: Check Corepack version after npm i corepack
       run: corepack -v
