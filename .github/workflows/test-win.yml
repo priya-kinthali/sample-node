@@ -18,8 +18,12 @@ jobs:
     - name: Uninstall Corepack
       run: npm uninstall -g corepack
 
-    - name: Remove Existing Yarn File
+    - name: Remove Existing Yarn Files
       run: |
+        Remove-Item -Force -Path "C:\npm\prefix\yarn.ps1"
+        Remove-Item -Force -Path "C:\npm\prefix\yarn.cmd"
+        Remove-Item -Force -Path "C:\npm\prefix\yarnpkg"
+        Remove-Item -Force -Path "C:\npm\prefix\yarnpkg.cmd"
         Remove-Item -Force -Path "C:\npm\prefix\yarn"
 
     - name: Install Latest Corepack
