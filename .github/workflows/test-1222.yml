@@ -39,6 +39,7 @@ jobs:
           npm cache clean --force
           npm uninstall -g corepack
           npm install -g --force corepack@latest
+          echo "::add-path::C:\\Users\\myuser\\AppData\\Roaming\\npm"
           corepack enable
           corepack -v
     - name: Check Corepack version before npm i corepack
