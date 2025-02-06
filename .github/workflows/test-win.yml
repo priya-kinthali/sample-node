@@ -24,6 +24,8 @@ jobs:
 
     - name: Check Corepack version
       run: corepack -v
+    - name: Clear npm cache
+      run: npm cache clean --force
     - name: Uninstall Corepack
       run: npm uninstall -g corepack
     - name: Enable Corepack
