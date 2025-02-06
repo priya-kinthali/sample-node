@@ -18,14 +18,14 @@ jobs:
     - name: Install Latest Corepack
       run: npm i -g --force corepack@latest
     - name: Update PATH for Corepack
-      shell: pwsh
-      run: |
-        $env:PATH = "C:\\Users\\runneradmin\\AppData\\Roaming\\npm;$env:PATH"
-        [System.Environment]::SetEnvironmentVariable('PATH', $env:PATH)
+      run: echo "C:\\Users\\runneradmin\\AppData\\Roaming\\npm" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
     - name: Enable Corepack
       shell: pwsh
       run: corepack enable
         
     - name: Verify Corepack Version
-      run: corepack --version
+      shell: pwsh
+      run: |
+        $env:PATH = "C:\\Users\\runneradmin\\AppData\\Roaming\\npm;$env:PATH"
+        corepack --version
