@@ -5,15 +5,17 @@ on: [push, pull_request]
 
 jobs:
   corepack-upgrade:
-    runs-on: self-hosted
+    runs-on: windows-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Check Windows version
-      run: systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
-      shell: cmd
+    # - name: Check Windows version
+    #   run: systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
+    #   shell: cmd
+    - name: Clear Node.js cache
+      run: rmdir /S /Q C:\hostedtoolcache\windows\node
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
