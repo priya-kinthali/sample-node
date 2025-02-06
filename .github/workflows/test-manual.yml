@@ -54,7 +54,8 @@ jobs:
       shell: bash
 
     - name: Verify corepack version
-      run: corepack --version
+      run: $(npm bin -g)/corepack --version
+      shell: bash
     # - name: Print Corepack Path #correct
     #   run: |
     #     Get-Command corepack | Select-Object -ExpandProperty Source
