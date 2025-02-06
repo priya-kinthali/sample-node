@@ -30,10 +30,10 @@ jobs:
     - name: Install Latest Corepack
       run: npm install -g corepack@latest
 
-    - name: Update PATH Environment Variable
+    - name: Set Path Environment Variable
       run: |
         $env:Path = "$env:APPDATA\\npm;$env:Path"
-        [Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Process)
+        [Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Machine)
         
     - name: Verify Corepack Version
       run: corepack --version
