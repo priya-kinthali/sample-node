@@ -18,14 +18,17 @@ jobs:
       run: |
         curl -o node-v20.18.2-x64.msi https://nodejs.org/dist/v20.18.2/node-v20.18.2-x64.msi
         msiexec /i node-v20.18.2-x64.msi /quiet
+        echo "C:\Program Files\nodejs" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
     - name: Check Node.js version
       run: node -v
 
     - name: Check Corepack version
       run: corepack --version
+
     - name: Enable Corepack
       run: npm install --global corepack@latest
+
     - name: Check pnpm version
       run: pnpm --version
       shell: pwsh
