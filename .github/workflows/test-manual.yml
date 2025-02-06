@@ -22,26 +22,29 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20.18.2'
-    - name: Check Corepack version
-      run: corepack --version
+          node-version: 20.18.2
     - name: Clear npm cache
       run: npm cache clean --force
+
+    - name: Clear Node.js and npm cache
+      run: |
+          rm -rf ~/.npm
+          rm -rf ~/.node-gyp
+          rm -rf ~/.cache
+
+    - name: Uninstall existing Corepack
+      run: npm uninstall --global corepack
+
     - name: Update npm to the latest version
       run: npm install -g npm@latest
 
-    - name: Check Node.js version
+    - name: Verify Node.js version
       run: node -v
 
-    # - name: Check Corepack version
-    #   run: corepack --version
-
-    - name: Enable Corepack
+    - name: Install Corepack
       run: npm install --global --force corepack@latest
 
-    - name: Check Corepack version
+    - name: Verify Corepack version
       run: corepack --version
+  
 
-    - name: Check pnpm version
-      run: pnpm --version
-      shell: pwsh
