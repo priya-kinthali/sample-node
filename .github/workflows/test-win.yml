@@ -28,17 +28,22 @@ jobs:
       run: npm cache clean --force
     - name: Uninstall Corepack
       run: npm uninstall -g corepack
-    # - name: Enable Corepack
-      # run: npm install --global corepack@latest
+    - name: Enable Corepack
+      run: npm install --global corepack@latest
+    - name: Update PATH to prioritize npm global bin
+      run: |
+        $env:PATH = "$env:APPDATA\npm;" + $env:PATH
+        [System.Environment]::SetEnvironmentVariable("PATH", $env:PATH, [System.EnvironmentVariableTarget]::Process)
+      
       # run: npm i -g --force corepack@latest && corepack enable
       # run: npx corepack@latest enable
-    - name: Download and install latest Corepack
-      run: |
-        curl -L https://github.com/nodejs/corepack/releases/latest/download/corepack.tgz -o corepack.tgz
-        tar -xzf corepack.tgz
-        mv package corepack
-        cd corepack
-        npm install -g .
+    # - name: Download and install latest Corepack
+    #   run: |
+    #     curl -L https://github.com/nodejs/corepack/releases/latest/download/corepack.tgz -o corepack.tgz
+    #     tar -xzf corepack.tgz
+    #     mv package corepack
+    #     cd corepack
+    #     npm install -g .
 
     - name: Enable Corepack
       run: corepack enable
