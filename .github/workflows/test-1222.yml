@@ -33,6 +33,14 @@ jobs:
         # cache: 'pnpm'
     - name: Check Node.js version
       run: node -v
+    - name: Install and enable corepack (Windows)
+      if: runner.os == 'Windows'
+      run: |
+          npm cache clean --force
+          npm uninstall -g corepack
+          npm install -g corepack@latest
+          corepack enable
+          corepack -v
     - name: Check Corepack version before npm i corepack
       run: corepack -v
     # - name: Enable Corepack
