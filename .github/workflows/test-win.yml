@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   corepack-upgrade:
-    runs-on: windows-latest
+    runs-on: self-hosted
 
     steps:
     - name: Checkout repository
@@ -15,17 +15,7 @@ jobs:
       with:
         node-version: '20.18.2'
 
-    - name: Install Latest Corepack
-      run: npm i -g --force corepack@latest
-    - name: Update PATH for Corepack
-      run: echo "C:\\Users\\runneradmin\\AppData\\Roaming\\npm" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-
-    - name: Enable Corepack
-      shell: pwsh
-      run: corepack enable
-        
-    - name: Verify Corepack Version
-      shell: pwsh
-      env:
-        PATH: C:\Users\runneradmin\AppData\Roaming\npm:$env:PATH
-      run: corepack --version
+    - name: Check Corepack version
+      run: corepack -v
+    - name: Check pnpm version
+      run: pnpm -v
