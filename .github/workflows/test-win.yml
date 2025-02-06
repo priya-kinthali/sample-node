@@ -24,6 +24,8 @@ jobs:
     - name: Uninstall existing Corepack
       run: npm uninstall -g corepack
       # shell: pwsh
+    - name: Clear npm cache
+      run: npm cache clean --force
     - name: Install latest Corepack
       run: |
         npm install -g --force corepack@latest
