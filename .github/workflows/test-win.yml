@@ -18,6 +18,9 @@ jobs:
     - name: Uninstall Corepack
       run: npm uninstall -g corepack
 
+    - name: Remove Existing Yarn File
+      run: Remove-Item -Force -Path "C:\npm\prefix\yarn"
+
     - name: Install Latest Corepack
       run: npm install -g corepack@latest
 
