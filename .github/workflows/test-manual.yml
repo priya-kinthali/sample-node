@@ -49,12 +49,12 @@ jobs:
 
     - name: Set PATH for corepack
       run: |
-        echo "$(npm bin -g)" >> $GITHUB_PATH
-        echo "$(npm prefix -g)/lib/node_modules/corepack" >> $GITHUB_PATH
+        echo "C:\\Users\\runneradmin\\AppData\\Roaming\\npm" >> $GITHUB_PATH
+        echo "C:\\Users\\runneradmin\\AppData\\Roaming\\npm\\node_modules\\corepack\\lib" >> $GITHUB_PATH
       shell: bash
 
     - name: Verify corepack version
-      run: $(npm bin -g)/corepack --version
+      run: corepack --version
       shell: bash
     # - name: Print Corepack Path #correct
     #   run: |
