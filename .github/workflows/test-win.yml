@@ -16,6 +16,7 @@ jobs:
         node-version: '20.18.2'
     - name: Check Windows version
       run: ver
+      shell: cmd
 
     - name: Check Corepack version
       run: corepack -v
