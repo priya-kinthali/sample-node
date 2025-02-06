@@ -30,7 +30,8 @@ jobs:
       run: npm uninstall -g corepack
     - name: Enable Corepack
       # run: npm install --global corepack@latest
-      run: npm i -g --force corepack@latest && corepack enable
+      # run: npm i -g --force corepack@latest && corepack enable
+      rum: npx corepack@latest enable
     - name: Check Corepack version
       run: corepack -v
     - name: Enable pnpm
