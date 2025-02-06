@@ -15,9 +15,7 @@ jobs:
     - name: Clear Node.js cache
       run: Remove-Item -Recurse -Force C:\hostedtoolcache\windows\node
       shell: pwsh
-    - name: Clear Yarn cache
-      run: yarn cache clean
-      shell: cmd
+
 
     - name: Setup Node.js
       uses: actions/setup-node@v4
@@ -30,6 +28,9 @@ jobs:
     #     node -v
     - name: Enable Corepack
       run: npm i -g --force corepack && corepack enable
+    - name: Clear Yarn cache
+      run: yarn cache clean
+      shell: cmd
 
     - name: Install dependencies
       run: pnpm install
