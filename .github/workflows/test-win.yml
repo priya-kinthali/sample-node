@@ -21,19 +21,30 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20.18.2'
+    - name: Install latest Corepack
+      run: npm install -g corepack@latest
+      shell: pwsh
+
+    - name: Update PATH to prioritize npm global bin
+      run: echo "::add-path::$(npm bin -g)"
+      shell: pwsh
+
+    - name: Check Corepack version
+      run: corepack --version
+      shell: pwsh
 
     - name: Check Corepack version
       run: corepack -v
-    - name: Clear npm cache
-      run: npm cache clean --force
-    - name: Uninstall Corepack
-      run: npm uninstall -g corepack
-    - name: Enable Corepack
-      run: npm install --global --force corepack@latest
-    - name: Update PATH to prioritize npm global bin
-      run: |
-        $env:PATH = "$env:APPDATA\npm;" + $env:PATH
-        [System.Environment]::SetEnvironmentVariable("PATH", $env:PATH, [System.EnvironmentVariableTarget]::Process)
+    # - name: Clear npm cache
+    #   run: npm cache clean --force
+    # - name: Uninstall Corepack
+    #   run: npm uninstall -g corepack
+    # - name: Enable Corepack
+    #   run: npm install --global --force corepack@latest
+    # - name: Update PATH to prioritize npm global bin
+    #   run: |
+    #     $env:PATH = "$env:APPDATA\npm;" + $env:PATH
+    #     [System.Environment]::SetEnvironmentVariable("PATH", $env:PATH, [System.EnvironmentVariableTarget]::Process)
       
       # run: npm i -g --force corepack@latest && corepack enable
       # run: npx corepack@latest enable
@@ -45,12 +56,12 @@ jobs:
     #     cd corepack
     #     npm install -g .
 
-    - name: Enable Corepack
-      run: corepack enable
-    - name: Check Corepack version
-      run: corepack -v
-    - name: Enable pnpm
-      run: corepack enable pnpm
-    - name: Check pnpm version
-      run: pnpm -v
+    # - name: Enable Corepack
+    #   run: corepack enable
+    # - name: Check Corepack version
+    #   run: corepack -v
+    # - name: Enable pnpm
+    #   run: corepack enable pnpm
+    # - name: Check pnpm version
+    #   run: pnpm -v
       #test
