@@ -47,7 +47,9 @@ jobs:
     - name: Install Corepack
       run: |
         npm install -g --force corepack@0.31.0
-        corepack --version
+        $corepackPath = (npm bin -g) + "\corepack.cmd"
+        & $corepackPath --version
+      shell: pwsh
     - name: Print Corepack Path
       run: |
         Get-Command corepack | Select-Object -ExpandProperty Source
@@ -59,6 +61,9 @@ jobs:
     #     corepack --version
 
     - name: Verify Corepack version
-      run: corepack --version
+      run: |
+        $corepackPath = (npm bin -g) + "\corepack.cmd"
+        & $corepackPath --version
+      shell: pwsh
   
 
