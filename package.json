@@ -1,6 +1,7 @@
 {
   "name": "@priyagupta18/sample-node-test",
   "version": "1.0.0",
+  "packageManager": "pnpm@10.2.0",
   "description": "sample-node application",
   "main": "index.js",
   "scripts": {
