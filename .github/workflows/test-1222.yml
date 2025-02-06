@@ -38,8 +38,10 @@ jobs:
       run: |
           npm cache clean --force
           npm uninstall -g corepack
-          npm install -g --force corepack@latest
-          echo "C:\\Users\\myuser\\AppData\\Roaming\\npm" >> $env:GITHUB_PATH
+          Invoke-WebRequest -Uri https://registry.npmjs.org/corepack/-/corepack-latest.tgz -OutFile corepack-latest.tgz
+          tar -xzf corepack-latest.tgz
+          npm install -g --force ./package
+          echo "$env:APPDATA\\npm" >> $env:GITHUB_PATH
           corepack enable
           corepack -v
     - name: Check Corepack version before npm i corepack
