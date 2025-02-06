@@ -29,7 +29,9 @@ jobs:
       shell: pwsh
 
     - name: Update PATH to prioritize npm global bin
-      run: echo "::add-path::$(npm bin -g)"
+      run: |
+        $npmBin = npm bin -g
+        echo $npmBin | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
       shell: pwsh
 
     - name: Check Corepack version
