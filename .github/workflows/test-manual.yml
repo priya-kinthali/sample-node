@@ -32,9 +32,11 @@ jobs:
         if (Test-Path $env:USERPROFILE\.node-gyp) { Remove-Item -Recurse -Force $env:USERPROFILE\.node-gyp }
         if (Test-Path $env:USERPROFILE\AppData\Local\Temp) { Remove-Item -Recurse -Force $env:USERPROFILE\AppData\Local\Temp }
       shell: pwsh
-
     - name: Uninstall existing Corepack
       run: npm uninstall --global corepack
+
+    - name: Verify uninstallation
+      run: corepack --version || echo "Corepack not found"
 
     - name: Update npm to the latest version
       run: npm install -g npm@latest
