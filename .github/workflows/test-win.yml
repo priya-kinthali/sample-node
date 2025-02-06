@@ -25,7 +25,8 @@ jobs:
     - name: Check Corepack version
       run: corepack -v
     - name: Enable Corepack
-      run: npm install --global corepack@latest
+      # run: npm install --global corepack@latest
+      run: npm i -g --force corepack && corepack enable
     - name: Check Corepack version
       run: corepack -v
     - name: Enable pnpm
