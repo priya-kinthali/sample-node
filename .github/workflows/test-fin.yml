@@ -13,10 +13,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20.18.2'
+    # - name: Setup Node.js
+    #   uses: actions/setup-node@v4
+    #   with:
+    #     node-version: '20.18.2'
+    - name: Set up Node.js
+      run: |
+        Invoke-WebRequest -Uri https://nodejs.org/dist/v20.18.2/node-v20.18.2-x64.msi -OutFile node-v20.18.2-x64.msi
+        Start-Process msiexec.exe -ArgumentList '/i', 'node-v20.18.2-x64.msi', '/quiet', '/norestart' -NoNewWindow -Wait
+        node -v
     - name: Enable Corepack
       run: npm i -g --force corepack && corepack enable
 
