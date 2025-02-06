@@ -28,9 +28,10 @@ jobs:
 
     - name: Clear Node.js and npm cache
       run: |
-          rm -rf ~/.npm
-          rm -rf ~/.node-gyp
-          rm -rf ~/.cache
+        Remove-Item -Recurse -Force $env:USERPROFILE\.npm
+        Remove-Item -Recurse -Force $env:USERPROFILE\.node-gyp
+        Remove-Item -Recurse -Force $env:USERPROFILE\AppData\Local\Temp
+      shell: pwsh
 
     - name: Uninstall existing Corepack
       run: npm uninstall --global corepack
