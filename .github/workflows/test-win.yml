@@ -25,6 +25,7 @@ jobs:
         Remove-Item -Force -Path "C:\npm\prefix\yarnpkg"
         Remove-Item -Force -Path "C:\npm\prefix\yarnpkg.cmd"
         Remove-Item -Force -Path "C:\npm\prefix\yarn"
+        Remove-Item -Force -Path "C:\npm\prefix\yarnpkg.ps1"
 
     - name: Install Latest Corepack
       run: npm install -g corepack@latest
