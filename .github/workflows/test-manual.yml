@@ -44,23 +44,21 @@ jobs:
     # - name: Verify Node.js version
     #   run: node -v
 
-    - name: Install Corepack
-      run: |
-        npm install -g --force corepack@0.31.0
-        $corepackPath = Get-Command corepack | Select-Object -ExpandProperty Source
-        Write-Host "Corepack path: $corepackPath"
-        & $corepackPath --version
-      shell: pwsh
+    - name: Install corepack
+      run: npm install -g --force corepack@0.31.0
 
-    - name: Verify Corepack version
+    - name: Set PATH for corepack
+      shell: bash
       run: |
-        $corepackPath = Get-Command corepack | Select-Object -ExpandProperty Source
-        & $corepackPath --version
-      shell: pwsh
-    - name: Print Corepack Path
-      run: |
-        Get-Command corepack | Select-Object -ExpandProperty Source
-      shell: pwsh
+        echo "::add-path::$(npm bin -g)"
+        echo "::add-path::$(npm prefix -g)/lib/node_modules/corepack"
+
+    - name: Verify corepack version
+      run: corepack --version
+    # - name: Print Corepack Path #correct
+    #   run: |
+    #     Get-Command corepack | Select-Object -ExpandProperty Source
+    #   shell: pwsh
 
     # - name: Use Correct Corepack Path
     #   run: |
