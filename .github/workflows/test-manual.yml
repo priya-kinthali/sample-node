@@ -23,29 +23,29 @@ jobs:
       uses: actions/setup-node@v4
       with:
           node-version: 20.18.2
-    - name: Clear npm cache
-      run: npm cache clean --force
+    # - name: Clear npm cache
+    #   run: npm cache clean --force
 
-    - name: Clear Node.js and npm cache
-      run: |
-        if (Test-Path $env:USERPROFILE\.npm) { Remove-Item -Recurse -Force $env:USERPROFILE\.npm }
-        if (Test-Path $env:USERPROFILE\.node-gyp) { Remove-Item -Recurse -Force $env:USERPROFILE\.node-gyp }
-        if (Test-Path $env:USERPROFILE\AppData\Local\Temp) { Remove-Item -Recurse -Force $env:USERPROFILE\AppData\Local\Temp }
-      shell: pwsh
-    - name: Uninstall existing Corepack
-      run: npm uninstall --global corepack
+    # - name: Clear Node.js and npm cache
+    #   run: |
+    #     if (Test-Path $env:USERPROFILE\.npm) { Remove-Item -Recurse -Force $env:USERPROFILE\.npm }
+    #     if (Test-Path $env:USERPROFILE\.node-gyp) { Remove-Item -Recurse -Force $env:USERPROFILE\.node-gyp }
+    #     if (Test-Path $env:USERPROFILE\AppData\Local\Temp) { Remove-Item -Recurse -Force $env:USERPROFILE\AppData\Local\Temp }
+    #   shell: pwsh
+    # - name: Uninstall existing Corepack
+    #   run: npm uninstall --global corepack
 
-    - name: Verify uninstallation
-      run: corepack --version || echo "Corepack not found"
+    # - name: Verify uninstallation
+    #   run: corepack --version || echo "Corepack not found"
 
-    - name: Update npm to the latest version
-      run: npm install -g npm@latest
+    # - name: Update npm to the latest version
+    #   run: npm install -g npm@latest
 
-    - name: Verify Node.js version
-      run: node -v
+    # - name: Verify Node.js version
+    #   run: node -v
 
     - name: Install Corepack
-      run: npm install --global --force corepack@latest
+      run: npm install -g corepack@0.31.0
 
     - name: Verify Corepack version
       run: corepack --version
