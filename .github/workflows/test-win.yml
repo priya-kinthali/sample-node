@@ -21,6 +21,9 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20.18.2'
+    - name: Uninstall existing Corepack
+      run: npm uninstall -g corepack
+      shell: pwsh
     - name: Install latest Corepack
       run: npm install -g corepack@latest
       shell: pwsh
