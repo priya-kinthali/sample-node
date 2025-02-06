@@ -1,0 +1,30 @@
+name: Test corepack error-1222
+
+on: [push, pull_request]
+
+jobs:
+  corepack-upgrade:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.18.2'
+
+    - name: Uninstall Corepack
+      run: npm uninstall -g corepack
+
+    - name: Install Latest Corepack
+      run: npm install -g corepack@latest
+
+    - name: Update PATH Environment Variable
+      run: |
+        $env:Path = "$env:APPDATA\\npm;$env:Path"
+        [Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Process)
+        
+    - name: Verify Corepack Version
+      run: corepack --version
