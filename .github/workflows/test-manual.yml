@@ -50,13 +50,13 @@ jobs:
         corepack --version
     - name: Print Corepack Path
       run: |
-        where corepack
-        corepack --version
+        Get-Command corepack | Select-Object -ExpandProperty Source
+      shell: pwsh
 
-    - name: Use Correct Corepack Path
-      run: |
-        export PATH=$(npm bin -g):$PATH
-        corepack --version
+    # - name: Use Correct Corepack Path
+    #   run: |
+    #     export PATH=$(npm bin -g):$PATH
+    #     corepack --version
 
     - name: Verify Corepack version
       run: corepack --version
