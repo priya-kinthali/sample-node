@@ -1,0 +1,31 @@
+name: Test corepack error-1222
+
+on:
+  push:
+    branches:
+      - test-1222
+  workflow_dispatch:
+
+jobs:
+  corepack-upgrade:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install Node.js
+      run: |
+        curl -o node-v20.18.2-x64.msi https://nodejs.org/dist/v20.18.2/node-v20.18.2-x64.msi
+        msiexec /i node-v20.18.2-x64.msi /quiet
+
+    - name: Check Node.js version
+      run: node -v
+
+    - name: Check Corepack version
+      run: corepack --version
+    - name: Enable Corepack
+      run: npm install --global corepack@latest
+    - name: Check pnpm version
+      run: pnpm --version
+      shell: pwsh
