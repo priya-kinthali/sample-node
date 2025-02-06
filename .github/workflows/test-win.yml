@@ -11,6 +11,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Check Windows version
+      run: systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
+      shell: cmd
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
