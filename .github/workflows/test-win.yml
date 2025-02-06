@@ -1,3 +1,4 @@
+
 name: Test corepack error-1222
 
 on: [push, pull_request]
@@ -14,9 +15,6 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20.18.2'
-    - name: Check Windows version
-      run: ver
-      shell: cmd
 
     - name: Check Corepack version
       run: corepack -v
@@ -24,5 +22,5 @@ jobs:
       run: npm install --global corepack@latest
     - name: Check Corepack version
       run: corepack -v
-    - name: Install dependencies
-      run: pnpm install
+    - name: Check pnpm version
+      run: pnpm -v
