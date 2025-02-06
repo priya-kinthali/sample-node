@@ -14,11 +14,16 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Install Node.js
+    # - name: Install Node.js
+    #   run: |
+    #     curl -o node-v20.18.2-x64.msi https://nodejs.org/dist/v20.18.2/node-v20.18.2-x64.msi
+    #     msiexec /i node-v20.18.2-x64.msi /quiet
+    #     $env:PATH = 'C:\Program Files\nodejs;' + $env:PATH
+    - name: Set up Node.js
       run: |
-        curl -o node-v20.18.2-x64.msi https://nodejs.org/dist/v20.18.2/node-v20.18.2-x64.msi
-        msiexec /i node-v20.18.2-x64.msi /quiet
-        echo "C:\Program Files\nodejs" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+        Invoke-WebRequest -Uri https://nodejs.org/dist/v20.18.2/node-v20.18.2-x64.msi -OutFile node-v20.18.2-x64.msi
+        Start-Process msiexec.exe -ArgumentList '/i', 'node-v20.18.2-x64.msi', '/quiet', '/norestart' -NoNewWindow -Wait
+        node -v
 
     - name: Check Node.js version
       run: node -v
