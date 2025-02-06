@@ -25,7 +25,7 @@ jobs:
       run: npm uninstall -g corepack
       shell: pwsh
     - name: Install latest Corepack
-      run: npm install -g corepack@latest
+      run: npm install -g --force corepack@latest
       shell: pwsh
 
     - name: Update PATH to prioritize npm global bin
