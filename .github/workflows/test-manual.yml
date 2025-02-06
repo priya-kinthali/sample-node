@@ -34,6 +34,9 @@ jobs:
     - name: Enable Corepack
       run: npm install --global --force corepack@latest
 
+    - name: Check Corepack version
+      run: corepack --version
+
     - name: Check pnpm version
       run: pnpm --version
       shell: pwsh
