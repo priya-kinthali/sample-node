@@ -48,6 +48,15 @@ jobs:
       run: |
         npm install -g --force corepack@0.31.0
         corepack --version
+    - name: Print Corepack Path
+      run: |
+        where corepack
+        corepack --version
+
+    - name: Use Correct Corepack Path
+      run: |
+        export PATH=$(npm bin -g):$PATH
+        corepack --version
 
     - name: Verify Corepack version
       run: corepack --version
