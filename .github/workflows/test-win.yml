@@ -26,6 +26,6 @@ jobs:
         
     - name: Verify Corepack Version
       shell: pwsh
-      run: |
-        $env:PATH = "C:\\Users\\runneradmin\\AppData\\Roaming\\npm;$env:PATH"
-        corepack --version
+      env:
+        PATH: C:\Users\runneradmin\AppData\Roaming\npm:$env:PATH
+      run: corepack --version
