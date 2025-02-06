@@ -47,7 +47,8 @@ jobs:
     - name: Install Corepack
       run: |
         npm install -g --force corepack@0.31.0
-        $corepackPath = (npm bin -g) + "\corepack.cmd"
+        $corepackPath = (npm bin -g).Replace('/', '\') + "\corepack.cmd"
+        Write-Host "Corepack path: $corepackPath"
         & $corepackPath --version
       shell: pwsh
     - name: Print Corepack Path
