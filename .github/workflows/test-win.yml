@@ -24,6 +24,8 @@ jobs:
 
     - name: Check Corepack version
       run: corepack -v
+    - name: Uninstall Corepack
+      run: npm uninstall -g corepack
     - name: Enable Corepack
       # run: npm install --global corepack@latest
       run: npm i -g --force corepack@latest && corepack enable
