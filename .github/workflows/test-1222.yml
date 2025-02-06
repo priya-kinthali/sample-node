@@ -38,7 +38,7 @@ jobs:
       run: |
           npm cache clean --force
           npm uninstall -g corepack
-          npm install -g corepack@latest
+          npm install -g --force corepack@latest
           corepack enable
           corepack -v
     - name: Check Corepack version before npm i corepack
