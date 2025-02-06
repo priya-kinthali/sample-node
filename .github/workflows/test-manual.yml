@@ -28,9 +28,9 @@ jobs:
 
     - name: Clear Node.js and npm cache
       run: |
-        Remove-Item -Recurse -Force $env:USERPROFILE\.npm
-        Remove-Item -Recurse -Force $env:USERPROFILE\.node-gyp
-        Remove-Item -Recurse -Force $env:USERPROFILE\AppData\Local\Temp
+        if (Test-Path $env:USERPROFILE\.npm) { Remove-Item -Recurse -Force $env:USERPROFILE\.npm }
+        if (Test-Path $env:USERPROFILE\.node-gyp) { Remove-Item -Recurse -Force $env:USERPROFILE\.node-gyp }
+        if (Test-Path $env:USERPROFILE\AppData\Local\Temp) { Remove-Item -Recurse -Force $env:USERPROFILE\AppData\Local\Temp }
       shell: pwsh
 
     - name: Uninstall existing Corepack
