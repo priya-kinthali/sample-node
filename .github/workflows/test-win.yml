@@ -15,7 +15,8 @@ jobs:
     #   run: systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
     #   shell: cmd
     - name: Clear Node.js cache
-      run: rmdir /S /Q C:\hostedtoolcache\windows\node
+      run: Remove-Item -Recurse -Force C:\hostedtoolcache\windows\node
+      shell: pwsh
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
