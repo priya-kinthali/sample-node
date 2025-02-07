@@ -20,8 +20,12 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20.18.2'
-    - name: Enable Corepack
-      run: npm install --global --force corepack@latest
+    - name: install Corepack
+      # run: npm install --global --force corepack@latest
+      run: npm install --global --force corepack
+    - name: Enable
+      run: corepack enable
+
     - name: Install dependencies
       run: pnpm install
     
