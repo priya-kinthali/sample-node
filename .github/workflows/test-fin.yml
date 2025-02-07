@@ -51,7 +51,7 @@ jobs:
     - name: Check Corepack version
       run: corepack -v
     - name: Enable Corepack
-      run: npm install --global corepack@latest
+      run: npm install --global --force corepack@latest
     - name: Check Corepack version
       run: corepack -v
     - name: Install dependencies
