@@ -6,31 +6,54 @@ on:
       - test-1222
   workflow_dispatch:
 
+# jobs:
+#   build:
+#     runs-on: windows-latest
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v4
+#     - name: Clear Node.js cache
+#       run: Remove-Item -Recurse -Force C:\hostedtoolcache\windows\node
+#       shell: pwsh
+
+
+#     - name: Setup Node.js
+#       uses: actions/setup-node@v4
+#       with:
+#         node-version: '20.18.2'
+#     # - name: Set up Node.js
+#     #   run: |
+#     #     Invoke-WebRequest -Uri https://nodejs.org/dist/v20.18.2/node-v20.18.2-x64.msi -OutFile node-v20.18.2-x64.msi
+#     #     Start-Process msiexec.exe -ArgumentList '/i', 'node-v20.18.2-x64.msi', '/quiet', '/norestart' -NoNewWindow -Wait
+#     #     node -v
+#     - name: Enable Corepack
+#       run: npm i -g --force corepack && corepack enable
+#     - name: Clear pnpm cache
+#       run: pnpm store prune
+#       shell: cmd
+
+#     - name: Install dependencies
+#       run: pnpm install
+
 jobs:
-  build:
+  corepack-upgrade:
     runs-on: windows-latest
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    - name: Clear Node.js cache
-      run: Remove-Item -Recurse -Force C:\hostedtoolcache\windows\node
-      shell: pwsh
-
 
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20.18.2'
-    # - name: Set up Node.js
-    #   run: |
-    #     Invoke-WebRequest -Uri https://nodejs.org/dist/v20.18.2/node-v20.18.2-x64.msi -OutFile node-v20.18.2-x64.msi
-    #     Start-Process msiexec.exe -ArgumentList '/i', 'node-v20.18.2-x64.msi', '/quiet', '/norestart' -NoNewWindow -Wait
-    #     node -v
-    - name: Enable Corepack
-      run: npm i -g --force corepack && corepack enable
-    - name: Clear pnpm cache
-      run: pnpm store prune
-      shell: cmd
 
+    - name: Check Corepack version
+      run: corepack -v
+    - name: Enable Corepack
+      run: npm install --global corepack@latest
+    - name: Check Corepack version
+      run: corepack -v
     - name: Install dependencies
       run: pnpm install
+      
