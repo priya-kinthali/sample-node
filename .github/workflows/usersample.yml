@@ -35,12 +35,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
-      # - name: Enable Corepack
-      #   run: |
-      #     npm install --global --force corepack@latest
-      #     corepack enable
-      #     pnpm -v
-      #   shell: bash
+      - name: Enable Corepack
+        run: |
+          npm i -g --force corepack
+          # corepack enable
+          pnpm -v
       - name: Install dependencies
         run: pnpm install
       - name: Check pnpm version
