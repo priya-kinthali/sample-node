@@ -1,8 +1,8 @@
 name: ' 🧪 Test Windows'
 on:
-  # push:
-  #   branches:
-  #     - test-1222
+  push:
+    branches:
+      - test-1222
   workflow_dispatch:
 
 jobs:
