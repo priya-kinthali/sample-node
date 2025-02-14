@@ -53,9 +53,14 @@ jobs:
 
     - name: Adjust PATH to prioritize global npm install
       run: |
+        $env:NPM_GLOBAL = "$(npm config get prefix)"
+        $env:PATH = "$env:NPM_GLOBAL;$env:PATH"
+        [System.Environment]::SetEnvironmentVariable('PATH', $env:PATH, [System.EnvironmentVariableTarget]::Process)
+        echo "Updated PATH: $env:PATH"
         echo "C:\Users\$(whoami)\AppData\Roaming\npm" >> $GITHUB_ENV
         echo "PATH=C:\Users\$(whoami)\AppData\Roaming\npm:$PATH" >> $GITHUB_ENV
         echo "PATH=$env:NPM_GLOBAL;$env:PATH" >> $GITHUB_ENV
+      shell: pwsh
 
     - name: Verify Corepack version
       run: corepack --version
