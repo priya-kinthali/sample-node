@@ -21,8 +21,9 @@ jobs:
         node-version: '20.18.2'
     - name: Install corepack globally
       run: npm install --global --force corepack@latest
-    - name: Update PATH
-      run: echo "::add-path::${{github.workspace}}/node_modules/.bin"
+    - name: Update PATH using Environment Files
+      run: echo "D:\a\sample-node\sample-node/node_modules/.bin" | Out-File -FilePath $env:GITHUB_PATH -Append
+
     - name: Enable corepack
       run: corepack enable
     - name: Install dependencies
