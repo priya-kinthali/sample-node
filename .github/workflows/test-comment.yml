@@ -27,6 +27,7 @@ jobs:
       run: |
         $env:PATH = "$env:APPDATA\\npm;$env:PATH"
         [System.Environment]::SetEnvironmentVariable('PATH', $env:PATH, [System.EnvironmentVariableTarget]::Process)
+        echo $env:PATH
     - name: Print PATH
       run: echo $env:PATH
     - name: Check Corepack version
