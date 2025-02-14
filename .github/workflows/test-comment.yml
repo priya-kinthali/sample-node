@@ -1,0 +1,30 @@
+name: Test final
+
+on:
+  push:
+    branches:
+      - test-1222
+  workflow_dispatch:
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.18.2'
+    - name: Install corepack globally
+      run: npm install --global --force corepack@latest
+    - name: Update PATH
+      run: echo "::add-path::${{github.workspace}}/node_modules/.bin"
+    - name: Enable corepack
+      run: corepack enable
+    - name: Install dependencies
+      run: pnpm install
+
