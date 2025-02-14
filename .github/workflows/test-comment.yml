@@ -26,7 +26,7 @@ jobs:
     - name: Manually set PATH to prioritize global npm modules
       run: |
         $env:PATH = "$env:APPDATA\\npm;$env:PATH"
-        [System.Environment]::SetEnvironmentVariable('PATH', $env:PATH)
+        [System.Environment]::SetEnvironmentVariable('PATH', $env:PATH, [System.EnvironmentVariableTarget]::Process)
     - name: Print PATH
       run: echo $env:PATH
     - name: Check Corepack version
