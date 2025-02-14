@@ -48,12 +48,11 @@ jobs:
     - name: Enable corepack
       run: corepack enable
 
-    - name: Adjust PATH to prioritize global npm install
+    - name: Set PATH environment variable globally
       run: |
         $env:NPM_GLOBAL = "$(npm config get prefix)"
         $env:PATH = "$env:NPM_GLOBAL\bin;$env:PATH"
-        [System.Environment]::SetEnvironmentVariable('PATH', $env:PATH, [System.EnvironmentVariableTarget]::Process)
-        echo "Updated PATH: $env:PATH"
+        echo "##vso[task.setvariable variable=PATH]$env:PATH"
       shell: pwsh
 
     - name: Print updated PATH
