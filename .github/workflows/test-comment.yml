@@ -19,10 +19,14 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20.18.2'
+    - name: Print PATH
+      run: echo $env:PATH
     - name: Install corepack globally
       run: npm install --global --force corepack@latest
-    - name: Update PATH using Environment Files
-      run: echo "$env:APPDATA\\npm" | Out-File -FilePath $env:GITHUB_PATH -Append
+    - name: Manually set PATH to prioritize global npm modules
+      run: |
+        $env:PATH = "$env:APPDATA\\npm;$env:PATH"
+        [System.Environment]::SetEnvironmentVariable('PATH', $env:PATH)
     - name: Print PATH
       run: echo $env:PATH
     - name: Check Corepack version
