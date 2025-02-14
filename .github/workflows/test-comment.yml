@@ -54,12 +54,13 @@ jobs:
       run: |
         npm install --global --force corepack@latest
 
-    - name: Verify corepack version from npm global directory
+
+    - name: Adjust PATH to prioritize global npm install
       run: |
-        $corepackPath = Join-Path -Path "$(npm config get prefix)" -ChildPath "corepack"
-        & $corepackPath -v
-    - name: Check Corepack version
-      run: corepack -v
+        echo "C:\Users\$(whoami)\AppData\Roaming\npm" >> $GITHUB_ENV
+        echo "PATH=C:\Users\$(whoami)\AppData\Roaming\npm:$PATH" >> $GITHUB_ENV
+    - name: Verify Corepack version
+      run: corepack --version
     - name: Install dependencies
       run: pnpm install
 
