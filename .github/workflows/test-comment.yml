@@ -38,12 +38,7 @@ jobs:
     #   run: corepack -v
     # - name: Install dependencies
     #   run: pnpm install
-    - name: Verify npm global installation directory
-      run: |
-        echo "NPM Global Directory: $(npm config get prefix)"
-        echo "Current PATH: $env:PATH"
-
-    - name: Add npm global installation directory to PATH
+    - name: Set NPM global path
       run: |
         $env:NPM_GLOBAL = "$(npm config get prefix)"
         $env:PATH = "$env:NPM_GLOBAL;$env:PATH"
@@ -51,14 +46,17 @@ jobs:
         echo "Updated PATH: $env:PATH"
 
     - name: Install corepack globally
-      run: |
-        npm install --global --force corepack@latest
+      run: npm install --global --force corepack@latest
 
+    - name: Enable corepack
+      run: corepack enable
 
     - name: Adjust PATH to prioritize global npm install
       run: |
         echo "C:\Users\$(whoami)\AppData\Roaming\npm" >> $GITHUB_ENV
         echo "PATH=C:\Users\$(whoami)\AppData\Roaming\npm:$PATH" >> $GITHUB_ENV
+        echo "PATH=$env:NPM_GLOBAL;$env:PATH" >> $GITHUB_ENV
+
     - name: Verify Corepack version
       run: corepack --version
     - name: Install dependencies
