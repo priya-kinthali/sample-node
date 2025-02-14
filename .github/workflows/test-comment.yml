@@ -22,10 +22,15 @@ jobs:
     - name: Install corepack globally
       run: npm install --global --force corepack@latest
     - name: Update PATH using Environment Files
-      run: echo "D:\a\sample-node\sample-node/node_modules/.bin" | Out-File -FilePath $env:GITHUB_PATH -Append
-
+      run: echo "$env:APPDATA\\npm" | Out-File -FilePath $env:GITHUB_PATH -Append
+    - name: Print PATH
+      run: echo $env:PATH
+    - name: Check Corepack version
+      run: corepack -v
     - name: Enable corepack
       run: corepack enable
+    - name: Check Corepack version
+      run: corepack -v
     - name: Install dependencies
       run: pnpm install
 
