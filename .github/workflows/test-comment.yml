@@ -38,12 +38,9 @@ jobs:
     #   run: corepack -v
     # - name: Install dependencies
     #   run: pnpm install
-    - name: Set NPM global path
-      run: |
-        $env:NPM_GLOBAL = "$(npm config get prefix)"
-        $env:PATH = "$env:NPM_GLOBAL;$env:PATH"
-        [System.Environment]::SetEnvironmentVariable('PATH', $env:PATH, [System.EnvironmentVariableTarget]::Process)
-        echo "Updated PATH: $env:PATH"
+    - name: Print current PATH
+      run: echo $env:PATH
+      shell: pwsh
 
     - name: Install corepack globally
       run: npm install --global --force corepack@latest
@@ -60,6 +57,10 @@ jobs:
         echo "C:\Users\$(whoami)\AppData\Roaming\npm" >> $GITHUB_ENV
         echo "PATH=C:\Users\$(whoami)\AppData\Roaming\npm:$PATH" >> $GITHUB_ENV
         echo "PATH=$env:NPM_GLOBAL;$env:PATH" >> $GITHUB_ENV
+      shell: pwsh
+
+    - name: Print updated PATH
+      run: echo $env:PATH
       shell: pwsh
 
     - name: Verify Corepack version
