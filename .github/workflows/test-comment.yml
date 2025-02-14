@@ -58,4 +58,8 @@ jobs:
       run: |
         $corepackPath = Join-Path -Path "$(npm config get prefix)" -ChildPath "corepack"
         & $corepackPath -v
+    - name: Check Corepack version
+      run: corepack -v
+    - name: Install dependencies
+      run: pnpm install
 
