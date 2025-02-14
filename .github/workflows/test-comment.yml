@@ -19,23 +19,42 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20.18.2'
-    - name: Print PATH
-      run: echo $env:PATH
-    - name: Install corepack globally
-      run: npm install --global --force corepack@latest
-    - name: Manually set PATH to prioritize global npm modules
+    # - name: Print PATH
+    #   run: echo $env:PATH
+    # - name: Install corepack globally
+    #   run: npm install --global --force corepack@latest
+    # - name: Manually set PATH to prioritize global npm modules
+    #   run: |
+    #     $env:PATH = "$env:APPDATA\\npm;$env:PATH"
+    #     [System.Environment]::SetEnvironmentVariable('PATH', $env:PATH, [System.EnvironmentVariableTarget]::Process)
+    #     echo $env:PATH
+    # - name: Print PATH
+    #   run: echo $env:PATH
+    # - name: Check Corepack version
+    #   run: corepack -v
+    # - name: Enable corepack
+    #   run: corepack enable
+    # - name: Check Corepack version
+    #   run: corepack -v
+    # - name: Install dependencies
+    #   run: pnpm install
+    - name: Verify npm global installation directory
       run: |
-        $env:PATH = "$env:APPDATA\\npm;$env:PATH"
+        echo "NPM Global Directory: $(npm config get prefix)"
+        echo "Current PATH: $env:PATH"
+
+    - name: Add npm global installation directory to PATH
+      run: |
+        $env:NPM_GLOBAL = "$(npm config get prefix)"
+        $env:PATH = "$env:NPM_GLOBAL;$env:PATH"
         [System.Environment]::SetEnvironmentVariable('PATH', $env:PATH, [System.EnvironmentVariableTarget]::Process)
-        echo $env:PATH
-    - name: Print PATH
-      run: echo $env:PATH
-    - name: Check Corepack version
-      run: corepack -v
-    - name: Enable corepack
-      run: corepack enable
-    - name: Check Corepack version
-      run: corepack -v
-    - name: Install dependencies
-      run: pnpm install
+        echo "Updated PATH: $env:PATH"
+
+    - name: Install corepack globally
+      run: |
+        npm install --global --force corepack@latest
+
+    - name: Verify corepack version
+      run: |
+        corepack -v
 
