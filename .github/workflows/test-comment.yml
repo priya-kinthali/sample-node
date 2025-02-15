@@ -30,6 +30,11 @@ jobs:
     - name: Install latest corepack version globally
       run: |
         npm install --global --force corepack@latest
+    - name: Modify PATH to prioritize global npm bin directory
+      run: |
+        $env:PATH = "C:\npm\prefix\node_modules\.bin;" + $env:PATH
+        echo $env:PATH
+        # This step explicitly moves the global npm bin directory to the front.
     - name: Check location of corepack
       run: |
         C:\Windows\System32\where.exe corepack
