@@ -37,6 +37,9 @@ jobs:
       - name: Check location of corepack before removing hostedtoolcache
         run: |
           C:\Windows\System32\where.exe corepack
+      - name: Check corepack version before removal
+        run: |
+          corepack --version
       - name: Get exact Node.js version
         id: node-version
         run: echo "NODE_VERSION=$(node -v)" >> $GITHUB_ENV
@@ -46,6 +49,9 @@ jobs:
           $nodeVersion = $env:NODE_VERSION.TrimStart('v')
           Remove-Item -Force "C:\hostedtoolcache\windows\node\$nodeVersion\x64\corepack*"
         shell: pwsh
+      - name: Check corepack version after removal
+        run: |
+          corepack --version
       - name: Check location of corepack after removing hostedtoolcache
         run: |
           C:\Windows\System32\where.exe corepack
@@ -53,7 +59,7 @@ jobs:
         run: |
           # npm i -g --force corepack
           corepack enable
-          pnpm -v
+          corepack --version
       - name: Check location of corepack after gloabl install
         run: |
           C:\Windows\System32\where.exe corepack
