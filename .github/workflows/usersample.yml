@@ -12,10 +12,10 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - 18.x
+          # - 18.x
           - 20.x
-          - 22.x
-          - 23.x
+          # - 22.x
+          # - 23.x
 
         os:
           - windows-latest
@@ -51,7 +51,7 @@ jobs:
           C:\Windows\System32\where.exe corepack
       - name: Enable Corepack
         run: |
-          npm i -g --force corepack
+          # npm i -g --force corepack
           corepack enable
           pnpm -v
       - name: Check location of corepack after gloabl install
