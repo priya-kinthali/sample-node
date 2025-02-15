@@ -21,18 +21,31 @@ jobs:
         node-version: '20.18.2'
         registry-url: 'https://registry.npmjs.org'
 
-    - name: Install corepack globally
-      run: npm install --global --force corepack@latest
-
-
-    # - name: Enable corepack
-    #   run: corepack enable
-
-    - name: Verify Corepack version
-      run: corepack --version
-    - name: Install dependencies with pnpm
+    - name: Clean npm cache and uninstall corepack
       run: |
-          pnpm install
-          yarn install
-          npm install
+                npm uninstall -g corepack
+                npm cache clean --force
+
+    - name: Print the current PATH
+      run: echo $env:PATH
+
+    - name: Uninstall corepack bundled with Node.js
+      run: |
+          npm uninstall -g corepack
+          # Ensure to clear cache just in case there's any leftover data
+          npm cache clean --force
+
+    - name: Install the latest corepack globally
+      run: |
+          npm install --global --force corepack@latest
+
+    - name: Update PATH to prioritize global corepack
+      run: |
+          echo "##[set-env name=PATH;]$(npm bin -g):$PATH"
+
+    - name: Verify corepack version
+      run: corepack --version
+
+    - name: Run pnpm install
+      run: pnpm install
 
