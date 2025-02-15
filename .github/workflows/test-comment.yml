@@ -33,6 +33,9 @@ jobs:
     - name: Clear hosted tool cache
       run: |
         Remove-Item -Recurse -Force C:\hostedtoolcache\windows\node
+    - name: check node version
+      run: |
+        node --version
     - name: Check location of corepack
       run: |
         C:\Windows\System32\where.exe corepack
