@@ -18,7 +18,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '22.14.0'
+        node-version: '20.18.3'
         registry-url: 'https://registry.npmjs.org'
     - name: Install corepack globally
       run: npm install --global --force corepack@latest
