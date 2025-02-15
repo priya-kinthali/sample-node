@@ -35,7 +35,7 @@ jobs:
         npm install --global --force corepack@latest
     - name: Modify PATH to prioritize global npm bin directory
       run: |
-        $env:PATH = "C:\\npm\\prefix;" + $env:PATH
+        $env:PATH = "C:\\npm\\prefix;" + [System.Environment]::GetEnvironmentVariable("PATH", [System.EnvironmentVariableTarget]::Process)
         [System.Environment]::SetEnvironmentVariable("PATH", $env:PATH, [System.EnvironmentVariableTarget]::Process)
         echo $env:PATH
         # This step explicitly moves the global npm bin directory to the front.
