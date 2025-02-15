@@ -39,9 +39,8 @@ jobs:
       run: |
           npm install --global --force corepack@latest
 
-    - name: Update PATH to prioritize global corepack
-      run: |
-          echo "##[set-env name=PATH;]$(npm bin -g):$PATH"
+    - name: Add global npm bin to PATH
+      run: echo "C:\\Users\\runneradmin\\AppData\\Roaming\\npm\\bin" >> $GITHUB_ENV
 
     - name: Verify corepack version
       run: corepack --version
