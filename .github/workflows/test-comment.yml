@@ -27,20 +27,18 @@ jobs:
     - name: Check location of corepack
       run: |
         C:\Windows\System32\where.exe corepack
-    - name: Clear npm cache
-      run: |
-        npm cache clean --force
     - name: Install latest corepack version globally
       run: |
         npm install --global --force corepack@latest
     - name: Clear hosted tool cache
       run: |
-        Remove-Item -Recurse -Force C:\hostedtoolcache\windows\node\20.18.2\x64
+        Remove-Item -Recurse -Force C:\hostedtoolcache\windows\node
     - name: Check location of corepack
       run: |
         C:\Windows\System32\where.exe corepack
     - name: check corepack version
       run: |
+        corepack enable
         corepack --version
 
 
