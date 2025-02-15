@@ -33,12 +33,9 @@ jobs:
     - name: Install latest corepack version globally
       run: |
         npm install --global --force corepack@latest
-    - name: Modify PATH to prioritize global npm bin directory
+    - name: Clear hosted tool cache
       run: |
-        $env:PATH = "C:\\npm\\prefix;" + [System.Environment]::GetEnvironmentVariable("PATH", [System.EnvironmentVariableTarget]::Process)
-        [System.Environment]::SetEnvironmentVariable("PATH", $env:PATH, [System.EnvironmentVariableTarget]::Process)
-        echo $env:PATH
-        # This step explicitly moves the global npm bin directory to the front.
+        Remove-Item -Recurse -Force C:\hostedtoolcache\windows\node\20.18.2\x64
     - name: Check location of corepack
       run: |
         C:\Windows\System32\where.exe corepack
