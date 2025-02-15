@@ -40,13 +40,20 @@ jobs:
           npm install --global --force corepack@latest
 
     - name: Add global npm bin to PATH
-      run: echo "C:\\Users\\runneradmin\\AppData\\Roaming\\npm\\bin" >> $GITHUB_ENV
+      run: |
+          echo "C:\\Users\\runneradmin\\AppData\\Roaming\\npm\\bin" >> $GITHUB_ENV
+          echo "PATH=$GITHUB_ENV"  # Echoing for debugging purposes, can be removed
 
     - name: Verify corepack version
       run: |
-        corepack enable
-        corepack --version
+          echo "PATH: $env:PATH"  # Debugging step, showing the current PATH
+          corepack --version
 
     - name: Run pnpm install
       run: pnpm install
+          
+
+
+
+
 
