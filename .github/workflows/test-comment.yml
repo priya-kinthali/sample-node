@@ -24,6 +24,12 @@ jobs:
     - name: Check location of corepack
       run: |
         C:\Windows\System32\where.exe corepack
+    - name: Install latest corepack version globally
+      run: |
+        npm install --global --force corepack@latest
+    - name: Check location of corepack
+      run: |
+        C:\Windows\System32\where.exe corepack
 
 
 
