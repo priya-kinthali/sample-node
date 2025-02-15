@@ -21,7 +21,7 @@ jobs:
         node-version: '20.18.2'
         registry-url: 'https://registry.npmjs.org'
     - name: Adjust PATH for global npm modules
-      run: echo "$(npm root --global)" >> $GITHUB_PATH
+      run: echo "$(npm root --global)/.bin" >> $GITHUB_PATH
     - name: Install corepack globally
       run: npm install --global --force corepack@latest
 
