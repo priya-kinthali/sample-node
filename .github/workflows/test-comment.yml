@@ -24,20 +24,9 @@ jobs:
     - name: Install corepack globally
       run: npm install --global --force corepack@latest
 
-    - name: Adjust PATH for global npm modules
-      run: |
-        $globalNpmBin = (npm root --global) + '\.bin'
-        echo "Adding $globalNpmBin to PATH"
-        echo "$globalNpmBin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-        $env:PATH = "$globalNpmBin;$env:PATH"
 
-    - name: Print PATH and corepack location
-      run: |
-        echo "PATH: $env:PATH"
-        Get-Command corepack
-        corepack --version
-    - name: Enable corepack
-      run: corepack enable
+    # - name: Enable corepack
+    #   run: corepack enable
 
     - name: Verify Corepack version
       run: corepack --version
