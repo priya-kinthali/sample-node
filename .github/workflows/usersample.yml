@@ -37,10 +37,10 @@ jobs:
       - name: Check location of corepack before removing hostedtoolcache
         run: |
           C:\Windows\System32\where.exe corepack
-      # - name: Get exact Node.js version
-      #   id: node-version
-      #   run: echo "NODE_VERSION=$(node -v)" >> $GITHUB_ENV
-      #   shell: bash
+      - name: Get exact Node.js version
+        id: node-version
+        run: echo "NODE_VERSION=$(node -v)" >> $GITHUB_ENV
+        shell: bash
       - name: Clear hosted tool cache
         run: |
           $nodeVersion = $env:NODE_VERSION.TrimStart('v')
