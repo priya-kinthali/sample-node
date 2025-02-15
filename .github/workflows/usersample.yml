@@ -34,16 +34,13 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-      - name: Install latest corepack version globally
-        run: |
-          npm install --global --force corepack@latest
       - name: Check location of corepack before removing hostedtoolcache
         run: |
           C:\Windows\System32\where.exe corepack
-      - name: Get exact Node.js version
-        id: node-version
-        run: echo "NODE_VERSION=$(node -v)" >> $GITHUB_ENV
-        shell: bash
+      # - name: Get exact Node.js version
+      #   id: node-version
+      #   run: echo "NODE_VERSION=$(node -v)" >> $GITHUB_ENV
+      #   shell: bash
       - name: Clear hosted tool cache
         run: |
           $nodeVersion = $env:NODE_VERSION.TrimStart('v')
@@ -57,6 +54,9 @@ jobs:
           npm i -g --force corepack
           corepack enable
           pnpm -v
+      - name: Check location of corepack after gloabl install
+        run: |
+          C:\Windows\System32\where.exe corepack
       - name: Install dependencies
         run: pnpm install
       - name: Check pnpm version
