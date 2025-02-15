@@ -43,7 +43,9 @@ jobs:
       run: echo "C:\\Users\\runneradmin\\AppData\\Roaming\\npm\\bin" >> $GITHUB_ENV
 
     - name: Verify corepack version
-      run: corepack --version
+      run: |
+        corepack enable
+        corepack --version
 
     - name: Run pnpm install
       run: pnpm install
