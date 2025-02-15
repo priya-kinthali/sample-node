@@ -25,11 +25,14 @@ jobs:
       run: npm install --global --force corepack@latest
 
 
-    - name: Enable corepack
-      run: corepack enable
+    # - name: Enable corepack
+    #   run: corepack enable
 
     - name: Verify Corepack version
       run: corepack --version
     - name: Install dependencies with pnpm
-      run: pnpm install
+      run: |
+          pnpm install
+          yarn install
+          npm install
 
