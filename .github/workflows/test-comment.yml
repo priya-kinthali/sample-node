@@ -59,8 +59,8 @@ jobs:
 
           corepack --version
 
-    - name: Run pnpm install
-      run: pnpm install
+    # - name: Run pnpm install
+    #   run: pnpm install
           
 
 
