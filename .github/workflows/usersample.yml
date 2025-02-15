@@ -34,7 +34,18 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-
+      - name: Install latest corepack version globally
+        run: |
+          npm install --global --force corepack@latest
+      - name: Check location of corepack before removing hostedtoolcache
+        run: |
+          C:\Windows\System32\where.exe corepack
+      - name: Clear hosted tool cache
+        run: |
+          Remove-Item -Force "C:\hostedtoolcache\windows\node\20.18.2\x64\corepack*"
+      - name: Check location of corepack after removing hostedtoolcache
+        run: |
+          C:\Windows\System32\where.exe corepack
       - name: Enable Corepack
         run: |
           npm i -g --force corepack
