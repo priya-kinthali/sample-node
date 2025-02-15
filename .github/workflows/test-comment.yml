@@ -11,6 +11,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-latest]
+        node-version: ['20.18.2']
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout repository
@@ -18,9 +19,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20.18.2'
-        registry-url: 'https://registry.npmjs.org'
-
+        node-version: ${{ matrix.node-version }}
     - name: check corepack version
       run: |
         corepack --version
@@ -32,7 +31,7 @@ jobs:
         npm install --global --force corepack@latest
     - name: Clear hosted tool cache
       run: |
-        Remove-Item -Recurse -Force C:\hostedtoolcache\windows\node
+        Remove-Item -Force "C:\hostedtoolcache\windows\node\20.18.2\x64\corepack*"
     - name: check node version
       run: |
         node --version
@@ -43,12 +42,14 @@ jobs:
       run: |
         corepack enable
         corepack --version
+    - name: Run pnpm install
+      run: pnpm install
 
 
 
 
-    # - name: Run pnpm install
-    #   run: pnpm install
+
+
           
 
 
