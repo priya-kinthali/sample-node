@@ -34,7 +34,7 @@ jobs:
           npm uninstall -g corepack
           # Ensure to clear cache just in case there's any leftover data
           npm cache clean --force
-          rm -rf $HOME/.npm/_corepack
+          Remove-Item -Recurse -Force "$HOME\.npm\_corepack"  # Fixed PowerShell command
 
 
     - name: Install the latest corepack globally
@@ -50,6 +50,12 @@ jobs:
       run: |
           echo "PATH: $env:PATH"  # Debugging step
           where corepack  # Check where the `corepack` binary is being picked up from
+
+          corepack --version
+    - name: Verify updated PATH
+      run: |
+          echo "PATH: $env:PATH"  # Debugging step
+          corepack enable  # corepack enable
 
           corepack --version
 
