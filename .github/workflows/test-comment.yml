@@ -26,11 +26,11 @@ jobs:
     - name: Adjust PATH for global npm modules
       run: echo "$(npm root --global)/.bin" >> $GITHUB_PATH
 
-    - name: Print PATH and corepack location
+    - name: Adjust PATH for global npm modules
       run: |
-        echo "PATH: $env:PATH"
-        which corepack
-        corepack --version
+        $globalNpmBin = (npm root --global) + '\.bin'
+        echo "Adding $globalNpmBin to PATH"
+        echo "$globalNpmBin" >> $env:GITHUB_PATH
     - name: Enable corepack
       run: corepack enable
 
