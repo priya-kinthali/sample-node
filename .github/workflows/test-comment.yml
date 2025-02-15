@@ -29,6 +29,7 @@ jobs:
         $globalNpmBin = (npm root --global) + '\.bin'
         echo "Adding $globalNpmBin to PATH"
         echo "$globalNpmBin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+        $env:PATH = "$globalNpmBin;$env:PATH"
 
     - name: Print PATH and corepack location
       run: |
