@@ -34,6 +34,8 @@ jobs:
           npm uninstall -g corepack
           # Ensure to clear cache just in case there's any leftover data
           npm cache clean --force
+          rm -rf $HOME/.npm/_corepack
+
 
     - name: Install the latest corepack globally
       run: |
@@ -42,11 +44,13 @@ jobs:
     - name: Add global npm bin to PATH
       run: |
           echo "C:\\Users\\runneradmin\\AppData\\Roaming\\npm\\bin" >> $GITHUB_ENV
-          echo "PATH=$GITHUB_ENV"  # Echoing for debugging purposes, can be removed
+          echo "PATH=$GITHUB_ENV"  # Debugging step
 
-    - name: Verify corepack version
+    - name: Verify updated PATH
       run: |
-          echo "PATH: $env:PATH"  # Debugging step, showing the current PATH
+          echo "PATH: $env:PATH"  # Debugging step
+          where corepack  # Check where the `corepack` binary is being picked up from
+
           corepack --version
 
     - name: Run pnpm install
