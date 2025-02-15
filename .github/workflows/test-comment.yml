@@ -23,7 +23,7 @@ jobs:
 
     - name: Check location of corepack
       run: |
-        where corepack
+        C:\Windows\System32\where.exe corepack
 
 
 
