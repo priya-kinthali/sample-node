@@ -21,6 +21,9 @@ jobs:
         node-version: '20.18.2'
         registry-url: 'https://registry.npmjs.org'
 
+    - name: check corepack version
+      run: |
+        corepack --version
     - name: Check location of corepack
       run: |
         C:\Windows\System32\where.exe corepack
@@ -30,6 +33,9 @@ jobs:
     - name: Check location of corepack
       run: |
         C:\Windows\System32\where.exe corepack
+    - name: check corepack version
+      run: |
+        corepack --version
 
 
 
