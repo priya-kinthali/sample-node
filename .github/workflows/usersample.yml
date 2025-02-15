@@ -40,15 +40,15 @@ jobs:
       - name: Check corepack version before removal
         run: |
           corepack --version
-      # - name: Get exact Node.js version
-      #   id: node-version
-      #   run: echo "NODE_VERSION=$(node -v)" >> $GITHUB_ENV
-      #   shell: bash
-      # - name: Clear hosted tool cache
-      #   run: |
-      #     $nodeVersion = $env:NODE_VERSION.TrimStart('v')
-      #     Remove-Item -Force "C:\hostedtoolcache\windows\node\$nodeVersion\x64\corepack*"
-      #   shell: pwsh
+      - name: Get exact Node.js version
+        id: node-version
+        run: echo "NODE_VERSION=$(node -v)" >> $GITHUB_ENV
+        shell: bash
+      - name: Clear hosted tool cache
+        run: |
+          $nodeVersion = $env:NODE_VERSION.TrimStart('v')
+          Remove-Item -Force "C:\hostedtoolcache\windows\node\$nodeVersion\x64\corepack*"
+        shell: pwsh
       # - name: Check corepack version after removal
       #   run: |
       #     corepack --version
@@ -58,9 +58,9 @@ jobs:
       - name: Enable Corepack
         run: |
           # npm i -g --force corepack
-          corepack enable
-          corepack --version
-      - name: Check location of corepack after gloabl install
+          # corepack enable
+          "C:\Program Files\nodejs\corepack.cmd" --version
+      - name: Check location of corepack after global install
         run: |
           C:\Windows\System32\where.exe corepack
       - name: Install dependencies
