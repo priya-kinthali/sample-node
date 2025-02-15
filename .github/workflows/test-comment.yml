@@ -21,53 +21,12 @@ jobs:
         node-version: '20.18.2'
         registry-url: 'https://registry.npmjs.org'
 
-    - name: Clean npm cache and uninstall corepack
-      run: |
-                npm uninstall -g corepack
-                npm cache clean --force
-
-    - name: Print the current PATH
-      run: echo $env:PATH
-
-    - name: Uninstall corepack bundled with Node.js
-      run: |
-          npm uninstall -g corepack
-          # Ensure to clear cache just in case there's any leftover data
-          npm cache clean --force
-    - name: Verify npm cache
-      run: |
-        npm cache verify     
-
-    - name: Install the latest corepack globally
-      run: |
-          npm install --global --force corepack@latest
-    - name: Add npm global bin to PATH
-      run: |
-        $npmGlobalBin = npm bin
-        Write-Host "Adding npm global bin directory to PATH: $npmGlobalBin"
-        $env:PATH += ";$npmGlobalBin"
-        Write-Host "Updated PATH: $env:PATH"
-
-    # Step 4: Verify the installed version of corepack
-    - name: Check corepack version
-      run: |
-        corepack --version
-
-    # Step 5: Check where corepack is installed (verify path)
-    - name: Verify corepack path
+    - name: Check location of corepack
       run: |
         where corepack
 
-    # Step 6: Verify PATH environment variable to ensure the correct bin is prioritized
-    - name: Verify PATH environment variable
-      run: |
-        echo $env:PATH
 
-    # Step 7: Verify Node.js and npm versions
-    - name: Verify Node.js and npm versions
-      run: |
-        node -v
-        npm -v
+
 
     # - name: Run pnpm install
     #   run: pnpm install
