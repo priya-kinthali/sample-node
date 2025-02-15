@@ -59,7 +59,7 @@ jobs:
         run: |
           # npm i -g --force corepack
           # corepack enable
-          "C:\Program Files\nodejs\corepack.cmd" --version
+          & "C:\Program Files\nodejs\corepack.cmd" --version
       - name: Check location of corepack after global install
         run: |
           C:\Windows\System32\where.exe corepack
