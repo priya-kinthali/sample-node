@@ -1,75 +1,45 @@
 name: Test corepack error-1222
 
 on:
-  # push:
-  #   branches:
-  #     - test-1222
+  push:
+    branches:
+      - test-1222
   workflow_dispatch:
 
 jobs:
-  corepack-upgrade:
-    runs-on: windows-latest
-
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+        node-version: ['20.18.2']
+    runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Verify corepack version
+      run: corepack --version
+    - name: Check location of corepack before removing hostedtoolcache
+      run: which corepack
+    - name: Install corepack
+      run: npm i -g --force corepack && corepack enable
+    - name: Check location of corepack before removing hostedtoolcache
+      run: which corepack
+
+    - name: Verify corepack version
+      run: corepack --version
+
 
     # - name: Set up Node.js
     #   run: |
     #     Invoke-WebRequest -Uri https://nodejs.org/dist/v20.18.2/node-v20.18.2-x64.msi -OutFile node-v20.18.2-x64.msi
     #     Start-Process msiexec.exe -ArgumentList '/i', 'node-v20.18.2-x64.msi', '/quiet', '/norestart' -NoNewWindow -Wait
     #     node -v
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-          node-version: 20.18.2
-    # - name: Clear npm cache
-    #   run: npm cache clean --force
 
-    # - name: Clear Node.js and npm cache
-    #   run: |
-    #     if (Test-Path $env:USERPROFILE\.npm) { Remove-Item -Recurse -Force $env:USERPROFILE\.npm }
-    #     if (Test-Path $env:USERPROFILE\.node-gyp) { Remove-Item -Recurse -Force $env:USERPROFILE\.node-gyp }
-    #     if (Test-Path $env:USERPROFILE\AppData\Local\Temp) { Remove-Item -Recurse -Force $env:USERPROFILE\AppData\Local\Temp }
-    #   shell: pwsh
-    # - name: Uninstall existing Corepack
-    #   run: npm uninstall --global corepack
 
-    # - name: Verify uninstallation
-    #   run: corepack --version || echo "Corepack not found"
-
-    # - name: Update npm to the latest version
-    #   run: npm install -g npm@latest
-
-    # - name: Verify Node.js version
-    #   run: node -v
-
-    - name: Install corepack
-      run: npm install -g --force corepack@0.31.0
-
-    - name: Set PATH for corepack
-      run: |
-        echo "C:\\Users\\runneradmin\\AppData\\Roaming\\npm" >> $GITHUB_PATH
-        echo "C:\\Users\\runneradmin\\AppData\\Roaming\\npm\\node_modules\\corepack\\lib" >> $GITHUB_PATH
-      shell: bash
-
-    - name: Verify corepack version
-      run: corepack --version
-      shell: bash
-    # - name: Print Corepack Path #correct
-    #   run: |
-    #     Get-Command corepack | Select-Object -ExpandProperty Source
-    #   shell: pwsh
-
-    # - name: Use Correct Corepack Path
-    #   run: |
-    #     export PATH=$(npm bin -g):$PATH
-    #     corepack --version
-
-    # - name: Verify Corepack version
-    #   run: |
-    #     $corepackPath = (npm bin -g) + "\corepack.cmd"
-    #     & $corepackPath --version
-    #   shell: pwsh
   
 
