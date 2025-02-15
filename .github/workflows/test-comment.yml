@@ -43,7 +43,7 @@ jobs:
           npm install --global --force corepack@latest
     - name: Add npm global bin to PATH
       run: |
-        $npmGlobalBin = npm bin -g
+        $npmGlobalBin = npm bin --global
         Write-Host "Adding npm global bin directory to PATH: $npmGlobalBin"
         $env:PATH += ";$npmGlobalBin"
         Write-Host "Updated PATH: $env:PATH"
