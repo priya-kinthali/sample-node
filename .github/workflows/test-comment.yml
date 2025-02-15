@@ -34,8 +34,7 @@ jobs:
           npm uninstall -g corepack
           # Ensure to clear cache just in case there's any leftover data
           npm cache clean --force
-          Remove-Item -Recurse -Force "$HOME\.npm\_corepack"  # Fixed PowerShell command
-
+          
 
     - name: Install the latest corepack globally
       run: |
