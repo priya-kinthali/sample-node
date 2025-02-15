@@ -42,7 +42,7 @@ jobs:
           C:\Windows\System32\where.exe corepack
       - name: Clear hosted tool cache
         run: |
-          Remove-Item -Force "C:\hostedtoolcache\windows\node\20.18.2\x64\corepack*"
+          Remove-Item -Force "C:\hostedtoolcache\windows\node\${{ matrix.node-version }}\x64\corepack*"
       - name: Check location of corepack after removing hostedtoolcache
         run: |
           C:\Windows\System32\where.exe corepack
