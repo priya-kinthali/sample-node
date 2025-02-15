@@ -41,6 +41,12 @@ jobs:
     - name: Install the latest corepack globally
       run: |
           npm install --global --force corepack@latest
+    - name: Add npm global bin to PATH
+      run: |
+        $npmGlobalBin = npm bin -g
+        Write-Host "Adding npm global bin directory to PATH: $npmGlobalBin"
+        $env:PATH += ";$npmGlobalBin"
+        Write-Host "Updated PATH: $env:PATH"
 
     # Step 4: Verify the installed version of corepack
     - name: Check corepack version
