@@ -31,8 +31,5 @@ jobs:
     - name: Verify Corepack version
       run: corepack --version
     - name: Install dependencies with pnpm
-      run: |
-        $globalNpmBin = (npm root --global) + '\.bin'
-        $env:PATH = "$globalNpmBin;$env:PATH"
-        pnpm install
+      run: pnpm install
 
