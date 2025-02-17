@@ -35,12 +35,18 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
+      - name: List contents of C:\npm\prefix before
+        run: dir C:\npm\prefix
+        shell: cmd
       - name: Check location of corepack before removing hostedtoolcache
         run: |
           C:\Windows\System32\where.exe corepack
       - name: install Corepack
         run: |
               npm i -g --force corepack
+      - name: List contents of C:\npm\prefix after
+        run: dir C:\npm\prefix
+        shell: cmd
       - name: Check location of corepack after installing corepack
         run: |
           C:\Windows\System32\where.exe corepack
