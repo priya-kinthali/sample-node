@@ -35,39 +35,43 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
-      - name: List contents of C:\npm\prefix before
-        run: dir C:\npm\prefix
-        shell: cmd
+      # - name: List contents of C:\npm\prefix before
+      #   run: dir C:\npm\prefix
+      #   shell: cmd
       - name: Check location of corepack before removing hostedtoolcache
         run: |
           C:\Windows\System32\where.exe corepack
-      - name: install Corepack
+      - name: Get exact Node.js version
+        # id: node-version
+        run: echo "NODE_VERSION=$(node -v)" >> $GITHUB_ENV
+        shell: bash
+      - name: Clear hosted tool cache
         run: |
-              npm i -g --force corepack
-      - name: List contents of C:\npm\prefix after
-        run: dir C:\npm\prefix
-        shell: cmd
-      - name: Check location of corepack after installing corepack
+          $nodeVersion = $env:NODE_VERSION.TrimStart('v')
+          Remove-Item -Force "C:\hostedtoolcache\windows\node\$nodeVersion\x64\corepack*"
+        # shell: pwsh
+      # - name: install Corepack
+      #   run: |
+      #         npm i -g --force corepack
+      # - name: List contents of C:\npm\prefix after
+      #   run: dir C:\npm\prefix
+      #   shell: cmd
+      - name: Check corepack version after removal hostedcache
         run: |
-          C:\Windows\System32\where.exe corepack
+          corepack --version
 
-
-      - name: Prepend custom path to PATH
+      # - name: Prepend custom path to PATH
+      #   run: |
+      #       echo "C:\npm\prefix;${{ env.PATH }}" > $env:GITHUB_PATH
+      - name: install and enable  corepack
         run: |
-            echo "C:\npm\prefix;${{ env.PATH }}" > $env:GITHUB_PATH
-             #echo "C:\npm\prefix\corepack;C:\npm\prefix\corepack.cmd;${{ env.PATH }}" > $env:GITHUB_PATH
-
-
-
-        
-      - name: Check location of corepack after installing corepack
-        run: |
-          C:\Windows\System32\where.exe corepack
-      - name: enable corepack
-        run: |
+          npm i -g --force corepack
           corepack enable
           corepack -v
           pnpm -v
         shell: bash
+      - name: Check location of corepack after installing corepack
+        run: |
+          C:\Windows\System32\where.exe corepack
       - name: Install dependencies
         run: pnpm install
