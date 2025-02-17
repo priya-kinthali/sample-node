@@ -40,7 +40,10 @@ jobs:
           C:\Windows\System32\where.exe corepack
       - name: install Corepack
         run: |
-          npm i --force corepack
+          npm uninstall -g yarn pnpm
+          # npm i --force corepack
+          npm i -g corepack
+
 
       # - name: Prepend custom path to PATH
       #   run: |
