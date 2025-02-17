@@ -12,10 +12,10 @@ jobs:
     strategy:
       matrix:
         node-version:
-          # - 18.x
+          - 18.x
           - 20.x
-          # - 22.x
-          # - 23.x
+          - 22.x
+          - 23.x
 
         os:
           - windows-latest
@@ -40,15 +40,17 @@ jobs:
       - name: Check corepack version before removal
         run: |
           corepack --version
-      - name: Get exact Node.js version
-        id: node-version
-        run: echo "NODE_VERSION=$(node -v)" >> $GITHUB_ENV
-        shell: bash
-      - name: Clear hosted tool cache
-        run: |
-          $nodeVersion = $env:NODE_VERSION.TrimStart('v')
-          Remove-Item -Force "C:\hostedtoolcache\windows\node\$nodeVersion\x64\corepack*"
-        shell: pwsh
+      # - name: Get exact Node.js version
+      #   id: node-version
+      #   run: echo "NODE_VERSION=$(node -v)" >> $GITHUB_ENV
+      #   shell: bash
+      # - name: Clear hosted tool cache
+      #   run: |
+      #     # $nodeVersion = $env:NODE_VERSION.TrimStart('v')
+      #     # Remove-Item -Force "C:\hostedtoolcache\windows\node\$nodeVersion\x64\corepack*"
+      #     Remove-Item -Force "C:\hostedtoolcache\windows\node\${{ matrix.node-version }}\x64\corepack*"
+
+        # shell: pwsh
       # - name: Check corepack version after removal
       #   run: |
       #     corepack --version
@@ -57,9 +59,9 @@ jobs:
       #     C:\Windows\System32\where.exe corepack
       - name: Enable Corepack
         run: |
-          # npm i -g --force corepack
-          # corepack enable
-          & "C:\Program Files\nodejs\corepack.cmd" --version
+          npm i -g --force corepack
+          corepack enable
+          corepack -v
       - name: Check location of corepack after global install
         run: |
           C:\Windows\System32\where.exe corepack
