@@ -51,6 +51,7 @@ jobs:
       - name: enable corepack
         run: |
           corepack enable
+          corepack -v
           pnpm -v
         shell: bash
       - name: Install dependencies
