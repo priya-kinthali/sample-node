@@ -20,6 +20,7 @@ jobs:
         os:
           - windows-latest
           # - macos-latest # Smoke test is enough for now.
+      fail-fast: false
 
     steps:
       - uses: actions/checkout@v4
