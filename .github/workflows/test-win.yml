@@ -1,8 +1,8 @@
 name: ' 🧪 Test Windows'
 on:
-  # push:
-  #   branches:
-  #     - test-1222
+  push:
+    branches:
+      - test-1222
   workflow_dispatch:
 
 jobs:
@@ -40,12 +40,12 @@ jobs:
           C:\Windows\System32\where.exe corepack
       - name: install Corepack
         run: |
-          npm i -g --force corepack
+          npm i --force corepack
 
-      - name: Prepend custom path to PATH
-        run: |
-          echo "C:\npm\prefix;${{ env.PATH }}" > $env:GITHUB_PATH
-      - name: Check location of corepack before removing hostedtoolcache
+      # - name: Prepend custom path to PATH
+      #   run: |
+      #     echo "C:\npm\prefix;${{ env.PATH }}" > $env:GITHUB_PATH
+      - name: Check location of corepack after installing corepack
         run: |
           C:\Windows\System32\where.exe corepack
       - name: enable corepack
