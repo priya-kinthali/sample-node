@@ -40,14 +40,12 @@ jobs:
           C:\Windows\System32\where.exe corepack
       - name: install Corepack
         run: |
-          npm uninstall -g yarn pnpm
-          # npm i --force corepack
-          npm i -g corepack
+              npm i -g --force corepack
 
 
-      # - name: Prepend custom path to PATH
-      #   run: |
-      #     echo "C:\npm\prefix;${{ env.PATH }}" > $env:GITHUB_PATH
+      - name: Prepend custom path to PATH
+        run: |
+          echo "C:\npm\prefix\corepack*;${{ env.PATH }}" > $env:GITHUB_PATH
       - name: Check location of corepack after installing corepack
         run: |
           C:\Windows\System32\where.exe corepack
