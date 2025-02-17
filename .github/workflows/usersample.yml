@@ -44,11 +44,11 @@ jobs:
       #   id: node-version
       #   run: echo "NODE_VERSION=$(node -v)" >> $GITHUB_ENV
       #   shell: bash
-      # - name: Clear hosted tool cache
-      #   run: |
-      #     # $nodeVersion = $env:NODE_VERSION.TrimStart('v')
-      #     # Remove-Item -Force "C:\hostedtoolcache\windows\node\$nodeVersion\x64\corepack*"
-      #     Remove-Item -Force "C:\hostedtoolcache\windows\node\${{ matrix.node-version }}\x64\corepack*"
+      - name: Clear hosted tool cache
+        run: |
+          # $nodeVersion = $env:NODE_VERSION.TrimStart('v')
+          # Remove-Item -Force "C:\hostedtoolcache\windows\node\$nodeVersion\x64\corepack*"
+          Remove-Item -Force "C:\hostedtoolcache\windows\node\${{ matrix.node-version }}\x64\corepack*"
 
         # shell: pwsh
       # - name: Check corepack version after removal
