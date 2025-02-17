@@ -16,7 +16,7 @@ jobs:
           - 20.x
 
 
-        os: [windows-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest]
 
           # - macos-latest # Smoke test is enough for now.
       fail-fast: false
