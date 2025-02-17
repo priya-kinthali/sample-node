@@ -1,8 +1,8 @@
 name: ' 🧪 Test Windows'
 on:
-  # push:
-  #   branches:
-  #     - test-1222
+  push:
+    branches:
+      - test-1222
   workflow_dispatch:
 
 jobs:
@@ -49,12 +49,12 @@ jobs:
           $nodeVersion = $env:NODE_VERSION.TrimStart('v')
           Remove-Item -Force "C:\hostedtoolcache\windows\node\$nodeVersion\x64\corepack*"
         # shell: pwsh
-      # - name: Check corepack version after removal
-      #   run: |
-      #     corepack --version
-      # - name: Check location of corepack after removing hostedtoolcache
-      #   run: |
-      #     C:\Windows\System32\where.exe corepack
+      - name: Check corepack version after removal
+        run: |
+          corepack --version
+      - name: Check location of corepack after removing hostedtoolcache
+        run: |
+          C:\Windows\System32\where.exe corepack
       - name: Enable Corepack
         run: |
           npm i -g --force corepack
