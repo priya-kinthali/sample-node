@@ -1,80 +1,42 @@
-
-name: Test corepack error-1222
-
+name: ' 🧪 Test Windows'
 on:
-  # push:
-  #   branches:
-  #     - test-1222
+  push:
+    branches:
+      - test-1222
   workflow_dispatch:
 
 jobs:
-  corepack-upgrade:
-    runs-on: windows-latest
+  test-os:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node-version:
+          - 18.x
+          - 20.x
+          - 22.x
+          - 23.x
+
+        os:
+          - windows-latest
+          # - macos-latest # Smoke test is enough for now.
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    # - name: Check Windows version
-    #   run: systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
-    #   shell: cmd
-    - name: Clear Node.js cache
-      run: Remove-Item -Recurse -Force C:\hostedtoolcache\windows\node
-      shell: pwsh
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20.18.2'
-    - name: Uninstall existing Corepack
-      run: npm uninstall -g corepack
-      # shell: pwsh
-    - name: Clear npm cache
-      run: npm cache clean --force
-    - name: Install latest Corepack
-      run: |
-        npm install -g --force corepack@latest
-        corepack --version
-      # shell: pwsh
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
 
-    # - name: Update PATH to prioritize npm global bin
-    #   run: |
-    #     $npmBin = & npm bin -g
-    #     echo $npmBin | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-    #   shell: pwsh
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4.2.0
+        with:
+          registry-url: 'https://registry.npmjs.org'
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
 
-    - name: Check Corepack version
-      run: corepack --version
-      # shell: pwsh
-
-    - name: Check Corepack version
-      run: corepack -v
-    # - name: Clear npm cache
-    #   run: npm cache clean --force
-    # - name: Uninstall Corepack
-    #   run: npm uninstall -g corepack
-    # - name: Enable Corepack
-    #   run: npm install --global --force corepack@latest
-    # - name: Update PATH to prioritize npm global bin
-    #   run: |
-    #     $env:PATH = "$env:APPDATA\npm;" + $env:PATH
-    #     [System.Environment]::SetEnvironmentVariable("PATH", $env:PATH, [System.EnvironmentVariableTarget]::Process)
-      
-      # run: npm i -g --force corepack@latest && corepack enable
-      # run: npx corepack@latest enable
-    # - name: Download and install latest Corepack
-    #   run: |
-    #     curl -L https://github.com/nodejs/corepack/releases/latest/download/corepack.tgz -o corepack.tgz
-    #     tar -xzf corepack.tgz
-    #     mv package corepack
-    #     cd corepack
-    #     npm install -g .
-
-    # - name: Enable Corepack
-    #   run: corepack enable
-    # - name: Check Corepack version
-    #   run: corepack -v
-    # - name: Enable pnpm
-    #   run: corepack enable pnpm
-    # - name: Check pnpm version
-    #   run: pnpm -v
-      #test
+      - name: Enable Corepack
+        run: |
+          npm i -g --force corepack
+          corepack enable
+          pnpm -v
+        shell: bash
