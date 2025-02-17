@@ -1,8 +1,8 @@
 name: ' 🧪 Test Windows'
 on:
-  # push:
-  #   branches:
-  #     - test-1222
+  push:
+    branches:
+      - test-1222
   workflow_dispatch:
 
 jobs:
@@ -35,9 +35,19 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
-      - name: Enable Corepack
+      - name: Check location of corepack before removing hostedtoolcache
+        run: |
+          C:\Windows\System32\where.exe corepack
+      - name: install Corepack
         run: |
           npm i -g --force corepack
+      - name: Prepend custom path to PATH
+        run: |
+          echo "C:\npm\prefix;${{ env.PATH }}" > $env:GITHUB_PATH
+      - name: enable corepack
+        run: |
           corepack enable
           pnpm -v
         shell: bash
+      - name: Install dependencies
+        run: pnpm install
