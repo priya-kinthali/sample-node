@@ -59,6 +59,9 @@ jobs:
       - name: Check corepack version after removal hostedcache
         run: |
           corepack --version
+      - name: Check location of corepack after removing hostedtoolcache
+        run: |
+          C:\Windows\System32\where.exe corepack
 
       # - name: Prepend custom path to PATH
       #   run: |
