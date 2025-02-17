@@ -1,8 +1,8 @@
 name: ' 🧪 Test Windows'
 on:
-  # push:
-  #   branches:
-  #     - test-1222
+  push:
+    branches:
+      - test-1222
   workflow_dispatch:
 
 jobs:
@@ -12,13 +12,12 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - 18.x
-          - 20.x
-          - 22.x
-          - 23.x
 
-        os:
-          - windows-latest
+          - 20.x
+
+
+        os: [windows-latest, macos-latest]
+
           # - macos-latest # Smoke test is enough for now.
       fail-fast: false
 
@@ -37,17 +36,17 @@ jobs:
 
       - name: Check location of corepack before removing hostedtoolcache
         run: |
-          C:\Windows\System32\where.exe corepack
+          which corepack
       - name: install Corepack
         run: |
           npm i -g --force corepack
 
-      - name: Prepend custom path to PATH
-        run: |
-          echo "C:\npm\prefix;${{ env.PATH }}" > $env:GITHUB_PATH
+      # - name: Prepend custom path to PATH
+      #   run: |
+      #     echo "C:\npm\prefix;${{ env.PATH }}" > $env:GITHUB_PATH
       - name: Check location of corepack before removing hostedtoolcache
         run: |
-          C:\Windows\System32\where.exe corepack
+          which corepack
       - name: enable corepack
         run: |
           corepack enable
