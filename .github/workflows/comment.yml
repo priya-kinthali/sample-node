@@ -42,7 +42,7 @@ jobs:
       #     Remove-Item -Force "C:\hostedtoolcache\windows\node\$nodeVersion\x64\corepack*"
       - name: Enable Corepack
         run: |
-          npm i -g --force corepack
+          # npm i -g --force corepack
           corepack enable
           corepack -v
           pnpm -v
