@@ -32,13 +32,14 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-      - name: Get exact Node.js version
-        run: echo "NODE_VERSION=$(node -v)" >> $GITHUB_ENV
-        shell: bash
-      - name: Clear hosted tool cache
-        run: |
-          $nodeVersion = $env:NODE_VERSION.TrimStart('v')
-          Remove-Item -Force "C:\hostedtoolcache\windows\node\$nodeVersion\x64\corepack*"
+          check-latest: true
+      # - name: Get exact Node.js version
+      #   run: echo "NODE_VERSION=$(node -v)" >> $GITHUB_ENV
+      #   shell: bash
+      # - name: Clear hosted tool cache
+      #   run: |
+      #     $nodeVersion = $env:NODE_VERSION.TrimStart('v')
+      #     Remove-Item -Force "C:\hostedtoolcache\windows\node\$nodeVersion\x64\corepack*"
       - name: Enable Corepack
         run: |
           npm i -g --force corepack
