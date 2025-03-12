@@ -10,8 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2",
-    "lint": "eslint ."
+    "express": "^4.18.2"
+    
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
