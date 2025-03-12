@@ -27,8 +27,6 @@ jobs:
     # - name: Run ESLint
     #   run: npx eslint .
     #   continue-on-error: true
-    - name: Set SHAs
-      uses: nrwl/nx-set-shas@v4
     - name: Install dependencies
       run: npm install
     - name: Lint
