@@ -17,19 +17,22 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
     - name: Setup Node.js
-      # uses: actions/setup-node@v4
-      uses: fregante/setup-node@patch-1
+      uses: actions/setup-node@v4
+      # uses: fregante/setup-node@patch-1
       with:
         node-version: '22.14.0'
+    - run: |
+        echo "  /home/runner/work/repo/file.ts"
+        echo "    14:1  error  'webext-messenger' should be listed in the project's dependencies. Run 'npm i -S webext-messenger' to add it  import/no-extraneous-dependencies"
     # - name: Install dependencies
     #   run: npm install
 
     # - name: Run ESLint
     #   run: npx eslint .
     #   continue-on-error: true
-    - name: Install dependencies
-      run: npm install
-    - name: Lint
-      run: npx eslint .
-      continue-on-error: true
+    # - name: Install dependencies
+    #   run: npm install
+    # - name: Lint
+    #   run: npx eslint .
+    #   continue-on-error: true
     
