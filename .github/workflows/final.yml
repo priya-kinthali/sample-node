@@ -22,8 +22,8 @@ jobs:
       with:
         node-version: '22.14.0'
     - run: |
-        echo " /home/runner/work/repo/file.ts"
-        echo "    55:5 warning Unexpected 'todo' comment: 'TODO: Add test for this eventuality:...' no-warning-comments"
+        echo "  /home/runner/work/repo/file.ts"
+        echo "    14:1  error  'webext-messenger' should be listed in the project's dependencies. Run 'npm i -S webext-messenger' to add it  import/no-extraneous-dependencies"
     - name: Install dependencies
       run: npm install
 
