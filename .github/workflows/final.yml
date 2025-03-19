@@ -21,9 +21,13 @@ jobs:
       uses: fregante/setup-node@patch-1
       with:
         node-version: '22.14.0'
-    - run: |
-        echo "  /home/runner/work/repo/file.ts"
-        echo "    14:1  error  'webext-messenger' should be listed in the project's dependencies. Run 'npm i -S webext-messenger' to add it  import/no-extraneous-dependencies"
+    - name: Test ESLint Compact Problem Matcher
+      run: |
+          echo "/home/runner/work/repo/file.ts: line 14, col 1, Error - 'webext-messenger' should be listed in the project's dependencies. Run 'npm i -S webext-messenger' to add it (import/no-extraneous-dependencies)"
+
+    # - run: |
+    #     echo "  /home/runner/work/repo/file.ts"
+    #     echo "    14:1  error  'webext-messenger' should be listed in the project's dependencies. Run 'npm i -S webext-messenger' to add it  import/no-extraneous-dependencies"
     - name: Install dependencies
       run: npm install
 
