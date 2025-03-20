@@ -27,7 +27,6 @@ jobs:
       run: |
         echo "/home/runner/work/repo/file.ts: line 14, col 1, error - 'webext-messenger' should be listed in the project's dependencies. Run 'npm i -S webext-messenger' to add it (import/no-extraneous-dependencies)"
         echo "/home/runner/work/repo/file.ts: line 20, col 5, warning - 'console' statements are not allowed (no-console)"
-        echo "/home/runner/work/repo/file.ts: line 25, col 3, info - 'const' should be used instead of 'let' (prefer-const)"
     # - run: |
     #     echo "  /home/runner/work/repo/file.ts"
     #     echo "    14:1  error  'webext-messenger' should be listed in the project's dependencies. Run 'npm i -S webext-messenger' to add it  import/no-extraneous-dependencies"
