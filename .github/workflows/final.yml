@@ -25,7 +25,7 @@ jobs:
     - name: Test ESLint Compact Problem Matcher
       run: |
           echo "/home/runner/work/repo/file.ts: line 14, col 1, error - 'webext-messenger' should be listed in the project's dependencies. Run 'npm i -S webext-messenger' to add it (import/no-extraneous-dependencies)"
-          echo "file.js: line 15, col 8, warning - Example warning message (rule-id)" >> output.txt
+          echo "55:5  warning  Unexpected 'todo' comment: 'TODO: Add test for this eventuality:...'     no-warning-comments"
 
 
     # - run: |
