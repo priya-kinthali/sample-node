@@ -17,16 +17,16 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
     - name: Setup Node.js
-      # uses: actions/setup-node@v4
+      uses: actions/setup-node@v4
       # uses: fregante/setup-node@patch-1
-      uses: FloEdelmann/setup-node@patch-1
+      # uses: FloEdelmann/setup-node@patch-1
       # uses: priya-kinthali/setup-node@test-1244
       with:
         node-version: '22.14.0'
     - name: Test ESLint Compact Problem Matcher
       run: |
         echo "/home/runner/work/repo/file.ts: line 14, col 1, error - 'webext-messenger' should be listed in the project's dependencies. Run 'npm i -S webext-messenger' to add it (import/no-extraneous-dependencies)"
-        echo "   /home/runner/work/repo/file.ts: line 20, col 5, warning - 'console' statements are not allowed (no-console)"
+        echo "/home/runner/work/repo/file.ts: line 20, col 5, info - 'console' statements are not allowed (no-console)"
     - name: Install dependencies
       run: npm install
 
