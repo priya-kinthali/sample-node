@@ -16,6 +16,10 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: '22.x'
-        cache: 'npm'
-        cache-dependency-path: '**/package-lock.json'
-    - run: npm ci
+        # cache: 'npm'
+        # cache-dependency-path: '**/package-lock.json'
+        cache: 'yarn'
+        cache-dependency-path: "yarn.lock"
+    - name: Install the packages
+      run: yarn install --frozen-lockfile --ignore-engines
+    # - run: npm ci
