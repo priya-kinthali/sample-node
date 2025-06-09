@@ -1,8 +1,8 @@
 name: ' 🧪 Test Windows operation time'
 on:
-  push:
-    branches:
-      - test-1244-eslint
+  # push:
+  #   branches:
+  #     - test-1244-eslint
   workflow_dispatch:
 jobs:
   build:
