@@ -18,29 +18,16 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    # - name: Setup Node.js
-    #   uses: actions/setup-node@v4
-    #   with:
-    #     node-version: '22.14.0'
-    - name: Install Node.js 22.14.0
-      run: |
-        curl -fsSL https://nodejs.org/dist/v22.14.0/node-v22.14.0-darwin-x64.tar.gz -o node.tar.gz
-        mkdir -p $HOME/node
-        tar -xzf node.tar.gz -C $HOME/node --strip-components=1
-        echo "$HOME/node/bin" >> $GITHUB_PATH
-        export PATH=$HOME/node/bin:$PATH
-        node --version
-
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22.14.0'
     - name: Check npm version
-      run: |
-        export PATH=$HOME/node/bin:$PATH
-        npm --version
-    # - name: Check npm version
-    #   run: npm --version
-    # - name: Downgrade npm to version 8
-    #   run: npm install -g npm@8
-    # - name: Check npm version
-    #   run: npm --version
+      run: npm --version
+    - name: Downgrade npm to version 10.5.0
+      run: npm install -g npm@10.5.0
+    - name: Check npm version
+      run: npm --version
     - name: Trigger an npm install error
       run: npm run does-not-exist
 
