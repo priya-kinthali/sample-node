@@ -24,8 +24,8 @@ jobs:
         node-version: '22.14.0'
     - name: Check npm version
       run: npm --version
-    - name: Downgrade npm to version 10.5.0
-      run: npm install -g npm@10.5.0
+    - name: Downgrade npm to version 10.6.0
+      run: npm install -g npm@10.6.0
     - name: Check npm version
       run: npm --version
     - name: Trigger an npm install error
