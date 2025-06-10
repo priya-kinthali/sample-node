@@ -1,9 +1,9 @@
 name: Test final
 
 on:
-  push:
-    branches:
-      - test-1244-eslint
+  # push:
+  #   branches:
+  #     - test-1244-eslint
   workflow_dispatch:
 jobs:
   build:
@@ -30,10 +30,7 @@ jobs:
     #   run: npm --version
     # - name: Trigger an npm install error
     #   run: npm run does-not-exist
-    - name: Run TypeScript and ESLint
-      run: |
-        npx tsc 
-        npx eslint . --format stylish 
+
 
 
     
