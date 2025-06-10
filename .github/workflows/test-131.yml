@@ -32,8 +32,8 @@ jobs:
     #   run: npm run does-not-exist
     - name: Run TypeScript and ESLint
       run: |
-        npx tsc does-not-exist
-        npx eslint . --format stylish does-not-exist
+        npx tsc 
+        npx eslint . --format stylish 
 
 
     
