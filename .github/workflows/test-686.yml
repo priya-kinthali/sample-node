@@ -1,0 +1,36 @@
+name: Test cache
+
+on:
+  push:
+    branches:
+      - test-686
+  workflow_dispatch:
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, windows-11-arm, macos-latest, macos-latest-large]
+    runs-on: ${{ matrix.os }}
+   
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Setup Node.js
+      # uses: actions/setup-node@v4
+      uses: priya-kinthali/setup-node@sample-686
+      with:
+        node-version: '24'
+        cache: 'npm'
+    - run: npm ci
+    - name: Install dependencies
+      run: npm install
+    # - name: install Corepack
+    #   # run: npm install --global --force corepack@latest
+    #   run: npm install --global --force corepack
+    # - name: Enable
+    #   run: corepack enable
+
+    # - name: Install dependencies
+    #   run: pnpm install
+    
