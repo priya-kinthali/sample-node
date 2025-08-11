@@ -21,10 +21,11 @@ jobs:
       uses: priya-kinthali/setup-node@sample-686
       with:
         node-version: '24'
-        cache: 'npm'
-    - run: npm ci
-    - name: Install dependencies
-      run: npm install
+        cache: 'yarn'
+    # - run: npm ci
+    # - name: Install dependencies
+    #   run: npm install
+    - run: yarn install
     # - name: install Corepack
     #   # run: npm install --global --force corepack@latest
     #   run: npm install --global --force corepack
