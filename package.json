@@ -13,7 +13,7 @@
   },
   "devEngines": {
     "packageManager": {
-      "name": "npm",
+      "name": "yarn",
       "onFail": "error"
     }
   }
