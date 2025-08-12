@@ -24,10 +24,10 @@ jobs:
       uses: priya-kinthali/setup-node@sample-686
       with:
         node-version: '24'
-        cache: 'abc'
-    # - run: npm ci
-    # - name: Install dependencies
-    #   run: npm install
-    - run: yarn install
+        cache: 'npm'
+    - run: npm ci
+    - name: Install dependencies
+      run: npm install
+    # - run: yarn install
     # - run: pnpm install
   
