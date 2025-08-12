@@ -10,5 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "express": "^5.1.0"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+      "onFail": "error"
+    }
   }
 }
