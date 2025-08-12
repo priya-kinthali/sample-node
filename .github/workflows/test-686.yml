@@ -16,26 +16,18 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    - uses: pnpm/action-setup@v4
-      with:
-        version: 9
+    # - uses: pnpm/action-setup@v4
+      # with:
+      #   version: 9
     - name: Setup Node.js
       # uses: actions/setup-node@v4
       uses: priya-kinthali/setup-node@sample-686
       with:
         node-version: '24'
-        cache: 'pnpm'
+        # cache: 'pnpm'
     # - run: npm ci
     # - name: Install dependencies
     #   run: npm install
-    # - run: yarn install
-    - run: pnpm install
-    # - name: install Corepack
-    #   # run: npm install --global --force corepack@latest
-    #   run: npm install --global --force corepack
-    # - name: Enable
-    #   run: corepack enable
-
-    # - name: Install dependencies
-    #   run: pnpm install
-    
+    - run: yarn install
+    # - run: pnpm install
+  
