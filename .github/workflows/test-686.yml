@@ -24,7 +24,7 @@ jobs:
       uses: priya-kinthali/setup-node@sample-686
       with:
         node-version: '24'
-        # cache: 'npm'
+        cache: ''
         enable-package-manager-cache: true
     # - run: npm ci
     # - name: Install dependencies
