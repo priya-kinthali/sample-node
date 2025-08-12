@@ -10,12 +10,5 @@
   "license": "ISC",
   "dependencies": {
     "express": "^5.1.0"
-  },
-  "devEngines": {
-    "packageManager": {
-      "name": "yarn",
-      "version": "1.22.19",
-      "onFail": "error"
-    }
   }
 }
