@@ -25,7 +25,7 @@ jobs:
       with:
         node-version: '24'
         cache: ''
-        enable-package-manager-cache: true
+        # enable-package-manager-cache: true
     # - run: npm ci
     # - name: Install dependencies
     #   run: npm install
