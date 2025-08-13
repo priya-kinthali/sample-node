@@ -25,12 +25,12 @@ jobs:
       # uses: priya-kinthali/setup-node@sample-686
       with:
         node-version: '24'
-        cache: 'yarn'
+        # cache: 'yarn'
         # cache-dependency-path: subdir/pnpm-lock.yaml
-        # enable-package-manager-cache: true
+        enable-package-manager-cache: true
     # - run: npm ci
     # - name: Install dependencies
     #   run: npm install
-    - run: yarn install
-    # - run: pnpm install
+    # - run: yarn install
+    - run: pnpm install
   
