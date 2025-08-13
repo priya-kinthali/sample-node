@@ -26,7 +26,7 @@ jobs:
         node-version: '24'
         # cache: 'npm'
         cache-dependency-path: subdir/pnpm-lock.yaml
-        enable-package-manager-cache: true
+        # enable-package-manager-cache: true
     # - run: npm ci
     # - name: Install dependencies
     #   run: npm install
