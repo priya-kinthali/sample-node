@@ -11,5 +11,11 @@
   "dependencies": {
     "express": "^5.1.0"
   },
-  "packageManager": "pnpm@9"
+  "devEngines": {
+    "packageManager": {
+      "name": "yarn",
+      "version": "1.22.19",
+      "onFail": "error"
+    }
+  }
 }
