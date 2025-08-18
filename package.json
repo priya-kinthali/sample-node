@@ -11,10 +11,5 @@
   "dependencies": {
     "express": "^5.1.0"
   },
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "onFail": "error"
-    }
-  }
+  "packageManager": "pnpm@9.6.7"
 }
