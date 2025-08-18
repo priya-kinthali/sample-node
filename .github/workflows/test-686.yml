@@ -28,9 +28,9 @@ jobs:
         # cache: 'pnpm'
         # cache-dependency-path: subdir/pnpm-lock.yaml
         # enable-package-manager-cache: true
-    - run: npm ci
-    - name: Install dependencies
-      run: npm install
-    # - run: yarn install
+    # - run: npm ci
+    # - name: Install dependencies
+    #   run: npm install
+    - run: yarn install
     # - run: pnpm install
   
