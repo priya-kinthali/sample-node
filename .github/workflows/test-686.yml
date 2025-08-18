@@ -25,6 +25,7 @@ jobs:
       uses: priya-kinthali/setup-node@sample-686
       with:
         node-version: '24'
+        default-cache: false
         # cache: 'pnpm'
         # cache-dependency-path: subdir/pnpm-lock.yaml
         # enable-package-manager-cache: true
