@@ -13,7 +13,7 @@
   },
   "devEngines": {
     "packageManager": {
-      "name": "pnpm",
+      "name": "npm",
       "version": "1.22.19",
       "onFail": "error"
     }
