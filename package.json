@@ -11,5 +11,5 @@
   "dependencies": {
     "express": "^5.1.0"
   },
-  "packageManager": "^npm@8"
+  "packageManager": "npm@8"
 }
