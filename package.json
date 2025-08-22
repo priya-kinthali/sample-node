@@ -11,5 +11,5 @@
   "dependencies": {
     "express": "^5.1.0"
   },
-  "packageManager": "^pnpm"
+  "packageManager": "^pnpm@9"
 }
