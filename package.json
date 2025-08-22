@@ -11,5 +11,5 @@
   "dependencies": {
     "express": "^5.1.0"
   },
-  "packageManager": "yarn@1.6.7"
+  "packageManager": "^yarn@1.6.7"
 }
