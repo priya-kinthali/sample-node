@@ -7,9 +7,9 @@
     "test": "echo \"Error: no test specified\" "
   },
   "author": "",
-  "license": "ISC",
+  "license": "ISC"
   "dependencies": {
     "express": "^5.1.0"
-  }
+  },
   "packageManager": "npm@8.1.0"
 }
