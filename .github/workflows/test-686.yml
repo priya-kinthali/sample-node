@@ -24,13 +24,13 @@ jobs:
     #   with:
     #     version: 9
     - name: Setup Node.js
-      # uses: actions/setup-node@v4
-      uses: priya-kinthali/setup-node@final-686
+      uses: actions/setup-node@v4
+      # uses: priya-kinthali/setup-node@final-686
       # uses: priya-kinthali/setup-node@sample-686
       # uses: priya-kinthali/setup-node@package-manager-field-caching
       with:
         node-version: '24'
-        # cache: 'npm'
+        cache: 'npm'
         # package-manager-cache: false
         # cache: 'pnpm'
         # cache-dependency-path: subdir/pnpm-lock.yaml
