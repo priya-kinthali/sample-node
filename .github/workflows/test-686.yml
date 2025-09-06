@@ -24,20 +24,20 @@ jobs:
       # with:
       #   version: 9
     - name: Setup Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v5
       # uses: priya-kinthali/setup-node@final-686
       # uses: priya-kinthali/setup-node@sample-686
       # uses: priya-kinthali/setup-node@package-manager-field-caching
       with:
         node-version: '24'
-        cache: 'yarn'
+        # cache: 'yarn'
         # package-manager-cache: false
         # cache: 'pnpm'
         # cache-dependency-path: subdir/pnpm-lock.yaml
         # enable-package-manager-cache: true
-    # - run: npm ci
-    # - name: Install dependencies
-    #   run: npm install
-    - run: yarn install
+    - run: npm ci
+    - name: Install dependencies
+      run: npm install
+    # - run: yarn install
     # - run: pnpm install
   
