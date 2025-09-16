@@ -30,12 +30,13 @@ jobs:
       # uses: priya-kinthali/setup-node@package-manager-field-caching
       with:
         node-version: '24'
-        cache: 'yarn'
+        # cache: 'yarn'
         # package-manager-cache: false
         # cache: 'pnpm'
         # cache-dependency-path: subdir/pnpm-lock.yaml
         # enable-package-manager-cache: true
     - run: npm ci
+    - run: npm --version
     - name: Install dependencies
       run: npm install
     # - run: yarn install
