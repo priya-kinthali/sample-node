@@ -14,7 +14,7 @@
   },
   "devEngines": {
     "packageManager": {
-      "name": "npm"
+      "name": "pnpm"
     }
   }
 }
