@@ -12,5 +12,9 @@
     "express": "^5.1.0",
     "mongoose": "^7.0.0"
   },
-  "packageManager": "npm@9.8.1"
+  "devEngines": {
+    "packageManager": {
+      "name": "npm"
+    }
+  }
 }
