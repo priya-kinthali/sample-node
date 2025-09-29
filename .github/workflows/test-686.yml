@@ -20,9 +20,9 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v5
-    # - uses: pnpm/action-setup@v4
-      # with:
-      #   version: 9
+    - uses: pnpm/action-setup@v4
+      with:
+        version: 9
     - name: Setup Node.js
       # uses: actions/setup-node@main
       uses: priyagupta108/setup-node@enable-npm-cache-default
@@ -36,10 +36,10 @@ jobs:
         # cache: 'pnpm'
         # cache-dependency-path: subdir/pnpm-lock.yaml
         # enable-package-manager-cache: true
-    - run: npm ci
-    - name: Install dependencies
-      run: npm install
-    - run: npm --version
+    # - run: npm ci
+    # - name: Install dependencies
+    #   run: npm install
+    # - run: npm --version
     # - run: yarn install
-    # - run: pnpm install
+    - run: pnpm install
   
