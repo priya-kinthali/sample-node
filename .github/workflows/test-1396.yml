@@ -6,8 +6,12 @@ on:
       - test-686
   workflow_dispatch:
 jobs:
-  build_and_release2:
-    runs-on: ubuntu-latest
+  # build_and_release2:
+  #   runs-on: ubuntu-latest
+  test-in-container:
+    runs-on: windows-latest  # Or your Windows self-hosted runner
+    container:
+      image: catthehacker/ubuntu:act-latest  # Same image as act uses
 
     steps:
       - name: Checkout
