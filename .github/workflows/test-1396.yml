@@ -1,5 +1,10 @@
-name: CI2
-on: push
+name: Test cache
+
+on:
+  push:
+    branches:
+      - test-686
+  workflow_dispatch:
 
 jobs:
   build_and_release2:
