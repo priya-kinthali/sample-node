@@ -1,0 +1,102 @@
+
+name: Test restore cache
+on:
+  push:
+    branches:
+      - test-686
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      # Checkout repository
+      - uses: actions/checkout@v6
+
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '21'
+
+      # Setup pnpm only when pnpm-lock.yaml exists
+      - name: Setup pnpm
+        if: hashFiles('pnpm-lock.yaml') != ''
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      # Normalize runner architecture (x64 / arm64)
+      - name: Normalize runner architecture
+        shell: bash
+        run: |
+          echo "ARCH=$(echo '${{ runner.arch }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+      # Detect package manager and its cache path
+      - name: Detect package manager and cache path
+        shell: bash
+        run: |
+          set -e
+          if [ -f pnpm-lock.yaml ]; then
+            PACKAGE_MANAGER=pnpm
+            CACHE_PATH=$(pnpm store path)
+            LOCK_PATTERN="**/pnpm-lock.yaml"
+          elif [ -f yarn.lock ]; then
+            PACKAGE_MANAGER=yarn
+            CACHE_PATH=$(yarn cache dir)
+            LOCK_PATTERN="**/yarn.lock"
+          else
+            PACKAGE_MANAGER=npm
+            CACHE_PATH=$(npm config get cache)
+            LOCK_PATTERN="**/package-lock.json"
+          fi
+          echo "PACKAGE_MANAGER=$PACKAGE_MANAGER" >> $GITHUB_ENV
+          echo "NODE_CACHE=$CACHE_PATH" >> $GITHUB_ENV
+          echo "LOCK_PATTERN=$LOCK_PATTERN" >> $GITHUB_ENV
+      # Debug resolved values
+      - name: Debug cache variables
+        shell: bash
+        run: |
+          echo "OS=${{ runner.os }}"
+          echo "ARCH=$ARCH"
+          echo "PACKAGE_MANAGER=$PACKAGE_MANAGER"
+          echo "NODE_CACHE=$NODE_CACHE"
+          echo "LOCK_PATTERN=$LOCK_PATTERN"
+      # Restore dependency cache using a unified key format
+      - name: Restore Node cache
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ env.NODE_CACHE }}
+          key: node-cache-${{ runner.os }}-${{ env.ARCH }}-${{ env.PACKAGE_MANAGER }}-${{ hashFiles(env.LOCK_PATTERN) }}
+
+      # Install dependencies based on detected package manager
+      - name: Install dependencies
+        shell: bash
+        run: |
+          if [ "$PACKAGE_MANAGER" = "pnpm" ]; then
+            if pnpm install --frozen-lockfile; then
+              echo "pnpm frozen-lockfile install succeeded"
+            else
+              echo "pnpm lockfile incompatible — retrying without frozen-lockfile"
+              pnpm install --no-frozen-lockfile
+            fi
+          elif [ "$PACKAGE_MANAGER" = "yarn" ]; then
+            yarn install --frozen-lockfile
+          else
+            npm ci
+          fi
+      # Run build script if present
+      - name: Build
+        shell: bash
+        run: |
+          if [ "$PACKAGE_MANAGER" = "pnpm" ]; then
+            pnpm run build
+          elif [ "$PACKAGE_MANAGER" = "yarn" ]; then
+            yarn build
+          else
+            npm run build --if-present
+          fi
