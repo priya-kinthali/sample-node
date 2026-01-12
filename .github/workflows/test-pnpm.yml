@@ -26,8 +26,6 @@ jobs:
         with:
           node-version: 24
 
-      - name: Show pnpm version
-        run: pnpm --version
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
