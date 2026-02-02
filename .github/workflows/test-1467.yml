@@ -16,11 +16,22 @@ jobs:
      
     steps:
       - uses: actions/checkout@v6
+      - name: Clear hosted tool cache
+        shell: bash
+        run: |
+          if [[ "$RUNNER_OS" == "Linux" ]]; then
+            sudo rm -rf /opt/hostedtoolcache
+          elif [[ "$RUNNER_OS" == "macOS" ]]; then
+            sudo rm -rf /Users/runner/hostedtoolcache
+          elif [[ "$RUNNER_OS" == "Windows" ]]; then
+            powershell -Command "Remove-Item -Recurse -Force C:\hostedtoolcache"
+          fi
       - uses: marco-ippolito/setup-node@fix-bearer-token
         with:
           node-version: '24'
           mirror: 'https://mirror.yandex.ru/mirrors/nodejs.org/'
           mirror-token: ${{secrets.GITHUB_TOKEN}}
+          package-manager-cache: false
       - name: Verify Node.js installation
         run: node -v    
       - run: npm i
