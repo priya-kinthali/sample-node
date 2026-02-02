@@ -1,0 +1,26 @@
+name: test-setup-node-mirror-token-bearer
+
+on:
+  push:
+    branches:
+      - test-686
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest, macos-13, ubuntu-24.04-arm]
+     
+    steps:
+      - uses: actions/checkout@v6
+      - uses: marco-ippolito/setup-node@fix-bearer-token
+        with:
+          node-version: '24'
+          mirror: 'https://mirror.yandex.ru/mirrors/nodejs.org/'
+          mirror-token: ${{secrets.GITHUB_TOKEN}}
+      - name: Verify Node.js installation
+        run: node -v    
+      - run: npm i
