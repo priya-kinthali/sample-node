@@ -16,6 +16,10 @@
     "runtime": {
       "name": "node",
       "version": "24.0.0"
+    },
+    "packageManager": {
+      "name": "npm",
+      "onFail": "error"
     }
   }
 }
