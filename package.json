@@ -12,16 +12,13 @@
     "express": "^5.1.0",
     "mongoose": "^7.0.0"
   },
-  "volta": {
-    "node": "19.0.0"
-  },
   "engines": {
-    "node": "18.0.0"
+    "node": "^18"
   },
   "devEngines": {
     "runtime": {
-      "name": "node",
-      "version": "22.0.0"
+      "name": "bun",
+      "version": "^1"
     }
   }
 }
