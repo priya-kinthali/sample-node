@@ -1,9 +1,9 @@
 name: test-setup-node-mirror-token-bearer
 
 on:
-  push:
-    branches:
-      - test-686
+  # push:
+  #   branches:
+  #     - test-686
   workflow_dispatch:
 
 jobs:

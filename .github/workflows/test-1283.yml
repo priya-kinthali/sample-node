@@ -1,0 +1,25 @@
+name: Test 1255
+
+on:
+  push:
+    branches:
+      - test-686
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v6
+    - name: Set up Node.js 
+      uses: susnux/setup-node@feat/support-dev-engines
+      # uses: actions/setup-node@v6
+      with:
+        node-version-file: 'package.json'
+    - name: Verify Latest Node.js Version
+      run: node -v
