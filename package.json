@@ -13,12 +13,12 @@
     "mongoose": "^7.0.0"
   },
   "engines": {
-    "node": "^18"
+    "node": "20"
   },
   "devEngines": {
     "runtime": {
-      "name": "bun",
-      "version": "^1"
+      "name": "node",
+      "version": "13"
     }
   }
 }
