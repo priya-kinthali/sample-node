@@ -1,9 +1,9 @@
 name: test-setup-node-mirror-token-bearer
 
 on:
-  # push:
-  #   branches:
-  #     - test-686
+  push:
+    branches:
+      - test-686
   workflow_dispatch:
 
 jobs:
@@ -29,7 +29,8 @@ jobs:
       - uses: marco-ippolito/setup-node@fix-bearer-token
         with:
           node-version: '25'
-          mirror: 'https://mirror.yandex.ru/mirrors/nodejs.org/'
+          # mirror: 'https://mirror.yandex.ru/mirrors/nodejs.org/'
+          mirror: 'invalid url'
           mirror-token: ${{secrets.GITHUB_TOKEN}}
           package-manager-cache: false
       - name: Verify Node.js installation

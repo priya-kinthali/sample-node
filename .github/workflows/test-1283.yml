@@ -1,9 +1,9 @@
 name: Test 1255
 
 on:
-  push:
-    branches:
-      - test-686
+  # push:
+  #   branches:
+  #     - test-686
   workflow_dispatch:
 
 jobs:
