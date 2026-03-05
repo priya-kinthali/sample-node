@@ -29,8 +29,7 @@ jobs:
       - uses: marco-ippolito/setup-node@fix-bearer-token
         with:
           node-version: '25'
-          # mirror: 'https://mirror.yandex.ru/mirrors/nodejs.org/'
-          mirror: 'invalid url'
+          mirror: 'https://mirror.yandex.ru/mirrors/nodejs.org/'
           mirror-token: ${{secrets.GITHUB_TOKEN}}
           package-manager-cache: false
       - name: Verify Node.js installation
