@@ -27,7 +27,7 @@ jobs:
             powershell -Command "Remove-Item -Recurse -Force C:\hostedtoolcache"
           fi
       # - uses: marco-ippolito/setup-node@fix-bearer-token
-      - uses: actions/setup-node@v6
+      - uses: priya-kinthali/setup-node@check-invalidurl-log
         with:
           node-version: '25'
           # mirror: 'https://mirror.yandex.ru/mirrors/nodejs.org/'
