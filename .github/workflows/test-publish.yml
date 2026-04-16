@@ -32,8 +32,9 @@ jobs:
     - uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
       with:
         registry-url: 'https://npm.pkg.github.com'
-    - run: npm ci
-    - run: npm publish
+    # - run: npm ci
+    - run: yarn install --frozen-lockfile
+    - run: yarn publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
