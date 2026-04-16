@@ -1,6 +1,6 @@
 {
   "name": "sample-node-test",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "sample-node application",
   "main": "index.js",
   "scripts": {
