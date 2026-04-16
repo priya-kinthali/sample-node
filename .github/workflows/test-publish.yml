@@ -6,35 +6,56 @@ on:
       - test-686
   workflow_dispatch:
 jobs:
-  build:
+  # build:
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       # os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, windows-11-arm, macos-latest, macos-13]
+  #       #os: [ubuntu-latest]
+  #       os: ['ubuntu-latest']
+
+  #       # os: [self-hosted]
+  #   runs-on: ${{ matrix.os }}
+   
+  #   steps:
+  #   - uses: actions/checkout@v6
+  #   # - uses: actions/setup-node@v6
+  #   - uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
+  #     with:
+  #       node-version: '24.x'
+  #       registry-url: 'https://registry.npmjs.org'
+  #   # - run: npm ci
+  #   - run: npm ci --ignore-scripts
+  #     env:
+  #       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  node-pnpm-depencies-caching:
+    name: Test pnpm (Node ${{ matrix.node-version}}, ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        # os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, windows-11-arm, macos-latest, macos-13]
-        #os: [ubuntu-latest]
-        os: ['ubuntu-latest']
-
-        # os: [self-hosted]
-    runs-on: ${{ matrix.os }}
-   
+        os: [ubuntu-latest, windows-latest, macos-latest, macos-15-intel]
+        node-version: [20, 22, 24]
     steps:
-    - uses: actions/checkout@v6
-    # - uses: actions/setup-node@v6
-    - uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
-      with:
-        node-version: '24.x'
-        registry-url: 'https://registry.npmjs.org'
-    # - run: npm ci
-    - run: npm ci --ignore-scripts
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-    # - uses: actions/setup-node@v6
-    # - uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
-    #   with:
-    #     registry-url: 'https://npm.pkg.github.com'
-    # - run: npm ci
-    # - run: yarn install --frozen-lockfile
-    # - run: yarn publish
-    #   env:
-    #     NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v6
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 6.10.0
+      - name: Generate pnpm file
+        run: pnpm install
+      - name: Remove dependencies
+        shell: pwsh
+        run: Remove-Item node_modules -Force -Recurse
+      - name: Clean global cache
+        run: rm -rf ~/.pnpm-store
+        shell: bash
+      - name: Setup Node
+        uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+
   
