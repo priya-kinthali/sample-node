@@ -54,6 +54,7 @@ jobs:
         uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
         with:
           node-version: ${{ matrix.node-version }}
+          registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
