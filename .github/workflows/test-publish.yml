@@ -28,12 +28,12 @@ jobs:
     # - run: npm publish
     #   env:
     #     NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-    # - uses: actions/setup-node@v6
-    - uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
+    - uses: actions/setup-node@v6
+    # - uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
       with:
         registry-url: 'https://npm.pkg.github.com'
     # - run: npm ci
-    # - run: yarn install --frozen-lockfile
+    - run: yarn install --frozen-lockfile
     - run: yarn publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
