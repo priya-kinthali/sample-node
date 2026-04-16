@@ -19,13 +19,13 @@ jobs:
    
     steps:
     - uses: actions/checkout@v6
-    # - uses: actions/setup-node@v6
-    - uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
+    - uses: actions/setup-node@v6
+    # - uses: Satishchoudhary94/setup-node@fix/oidc-support-1440
       with:
         node-version: '24.x'
         registry-url: 'https://registry.npmjs.org'
     # - run: npm ci
-    # - run: yarn install --frozen-lockfile
+    - run: yarn install --frozen-lockfile
     - run: yarn publish
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
