@@ -25,6 +25,7 @@ jobs:
     #     version: 10
     - name: Activate latest Yarn
       run: |
+        npm uninstall -g yarn || true
         corepack enable
         corepack prepare yarn@stable --activate
     - name: Check Yarn version
