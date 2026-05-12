@@ -36,8 +36,10 @@ jobs:
         # cache: 'pnpm'
         # cache-dependency-path: subdir/pnpm-lock.yaml
         # enable-package-manager-cache: true
-    - name: Install latest Yarn
-      run: npm install -g yarn@latest
+    - name: Activate latest Yarn
+      run: |
+        corepack enable
+        corepack prepare yarn@stable --activate
     - name: Check Yarn version
       run: yarn --version
     # - run: npm ci
