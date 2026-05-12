@@ -11,7 +11,6 @@
   },
   "author": "",
   "license": "ISC",
-  "packageManager": "yarn@4.14.1",
   "dependencies": {
     "express": "^5.1.0",
     "mongoose": "^7.0.0"
