@@ -23,12 +23,6 @@ jobs:
     # - uses: pnpm/action-setup@v6
     #   with:
     #     version: 10
-    - name: Activate latest Yarn
-      run: |
-        corepack enable
-        corepack prepare yarn@stable --activate
-    - name: Check Yarn version
-      run: yarn --version
     - name: Setup Node.js
       uses: actions/setup-node@v6
       # uses: priya-kinthali/setup-node@final-686
@@ -41,7 +35,12 @@ jobs:
         # package-manager-cache: false
         # cache: 'pnpm'
         # cache-dependency-path: subdir/pnpm-lock.yaml
-
+    - name: Activate latest Yarn
+      run: |
+        corepack enable
+        corepack prepare yarn@stable --activate
+    - name: Check Yarn version
+      run: yarn --version
     # - run: npm ci
     # - name: Install dependencies
     #   run: npm install
