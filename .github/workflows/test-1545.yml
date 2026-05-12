@@ -64,7 +64,7 @@ jobs:
       # run: echo "path=$(npm config get cache)" >> $GITHUB_OUTPUT
       # run: echo "path=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
         # For yarn workflow, output of yarn cache dir (v1) or yarn config get cacheFolder (v2+)
-      run: echo "path=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT 
+      run: echo "path=$(yarn cache dir)" >> $GITHUB_OUTPUT 
     - name: Restore Node cache
       uses: actions/cache/restore@v5
       with:
