@@ -46,7 +46,7 @@ jobs:
     # - name: Install dependencies
     #   run: npm install
     # - run: npm --version
-    - run: yarn install --immutable=false
+    - run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
     # - run: pnpm install
 
     # - name: Normalize runner architecture
