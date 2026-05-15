@@ -23,13 +23,13 @@ jobs:
     # - uses: pnpm/action-setup@v6
     #   with:
     #     version: 10
-    - name: Activate latest Yarn
-      run: |
-        npm uninstall -g yarn || true
-        corepack enable
-        corepack prepare yarn@stable --activate
-    - name: Check Yarn version
-      run: yarn --version
+    # - name: Activate latest Yarn
+    #   run: |
+    #     npm uninstall -g yarn || true
+    #     corepack enable
+    #     corepack prepare yarn@stable --activate
+    # - name: Check Yarn version
+    #   run: yarn --version
     - name: Setup Node.js
       uses: actions/setup-node@v6
       # uses: priya-kinthali/setup-node@final-686
@@ -37,40 +37,40 @@ jobs:
       # uses: priya-kinthali/setup-node@package-manager-field-caching
       with:
         node-version: '24'
-        # cache: 'npm'
+        cache: 'npm'
         # cache: 'yarn'
         # package-manager-cache: false
         # cache: 'pnpm'
         # cache-dependency-path: subdir/pnpm-lock.yaml
     # - run: npm ci
-    # - name: Install dependencies
-    #   run: npm install
-    # - run: npm --version
+    - name: Install dependencies
+      run: npm install
+    - run: npm --version
     # - name: Install dependencies
       # run: yarn install --frozen-lockfile
       # run: yarn install --immutable
     # - run: pnpm install
 
-    - name: Get architecture matching setup-node cache key
-      shell: bash
-      run: echo "ARCH=$(node -p 'os.arch()')" >> $GITHUB_ENV
-    - name: Output of cache path
-      id: cachepath
-      shell: bash
-      # run: echo "path=$(npm config get cache)" >> $GITHUB_OUTPUT
-      # run: echo "path=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
-        # For yarn workflow, output of yarn cache dir (v1) or yarn config get cacheFolder (v2+)
-      run: echo "path=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT 
-    - name: Restore Node cache
-      uses: actions/cache/restore@v5
-      with:
-        path: ${{ steps.cachepath.outputs.path }}
-        # key: node-cache-${{ runner.os }}-${{ env.ARCH }}-npm-${{ hashFiles('**/package-lock.json') }}
-        key: node-cache-${{ runner.os }}-${{ env.ARCH }}-yarn-${{ hashFiles('**/yarn.lock') }}
-        # key: node-cache-${{ runner.os }}-${{ env.ARCH }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-    # - run: npm ci
-    - name: Install dependencies
-      run: yarn install --frozen-lockfile
-      # run: yarn install --immutable
-    # - run: pnpm install --frozen-lockfile
+    # - name: Get architecture matching setup-node cache key
+    #   shell: bash
+    #   run: echo "ARCH=$(node -p 'os.arch()')" >> $GITHUB_ENV
+    # - name: Output of cache path
+    #   id: cachepath
+    #   shell: bash
+    #   # run: echo "path=$(npm config get cache)" >> $GITHUB_OUTPUT
+    #   # run: echo "path=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
+    #     # For yarn workflow, output of yarn cache dir (v1) or yarn config get cacheFolder (v2+)
+    #   run: echo "path=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT 
+    # - name: Restore Node cache
+    #   uses: actions/cache/restore@v5
+    #   with:
+    #     path: ${{ steps.cachepath.outputs.path }}
+    #     # key: node-cache-${{ runner.os }}-${{ env.ARCH }}-npm-${{ hashFiles('**/package-lock.json') }}
+    #     key: node-cache-${{ runner.os }}-${{ env.ARCH }}-yarn-${{ hashFiles('**/yarn.lock') }}
+    #     # key: node-cache-${{ runner.os }}-${{ env.ARCH }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+    # # - run: npm ci
+    # - name: Install dependencies
+    #   run: yarn install --frozen-lockfile
+    #   # run: yarn install --immutable
+    # # - run: pnpm install --frozen-lockfile
   
