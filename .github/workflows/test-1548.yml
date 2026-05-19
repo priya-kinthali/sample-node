@@ -16,7 +16,11 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v6
+    - name: Clear tool cache
+      shell: bash
+      run: rm -rf "$RUNNER_TOOL_CACHE/node"
     - name: Exhaust unauthenticated rate limit
+      shell: bash
       run: |
         for i in $(seq 1 65); do
           curl -s -o /dev/null -w "%{http_code} " https://api.github.com/repos/actions/node-versions/releases
