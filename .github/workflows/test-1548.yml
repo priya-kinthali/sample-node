@@ -31,8 +31,9 @@ jobs:
     - uses: actions/setup-node@v6
     # - uses: priya-kinthali/setup-node@test-1548
       with:
-        node-version: '21'
-        mirror: 'https://mirror.yandex.ru/mirrors/nodejs.org/'
+        node-version: 'lts/*'
+        # mirror: 'https://mirror.yandex.ru/mirrors/nodejs.org/'
+        mirror: 'https://internal-mirror.f-secure.com/nodejs'
     - name: Verify Node.js installation
       run: node -v    
     - run: npm i
