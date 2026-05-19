@@ -29,9 +29,9 @@ jobs:
         echo "Rate limit status:"
         curl -s https://api.github.com/rate_limit | jq '.rate'
     - uses: actions/setup-node@v6
-    # - uses: F-Secure-web/setup-node-1@fix/only-use-mirror-token-for-manifest-if-set
+    # - uses: priya-kinthali/setup-node@test-1548
       with:
-        node-version: 'lts/*'
+        node-version: '21'
         mirror: 'https://mirror.yandex.ru/mirrors/nodejs.org/'
         mirror-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Verify Node.js installation
