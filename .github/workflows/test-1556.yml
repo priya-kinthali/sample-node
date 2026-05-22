@@ -1,4 +1,4 @@
-name: Reproduce setup-node fallback
+name: Reproduce setup-node silent fallthrough (#1556)
 
 on:
   push:
@@ -14,23 +14,51 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Seed a broken Node cache entry
+      - name: Set target version
+        id: target
+        run: echo "version=22.11.0" >> "$GITHUB_OUTPUT"
+
+      - name: Show baked-in Node (before setup-node)
         shell: bash
         run: |
-          rm -rf "$RUNNER_TOOL_CACHE/node"
-          cache_dir="$RUNNER_TOOL_CACHE/node/25.0.0/x64"
-          mkdir -p "$cache_dir/bin"
-          touch "$cache_dir/.complete"
-          echo "Seeded broken cache at $cache_dir"
+          echo "Baked node: $(which node) -> $(node -v)"
 
-      - name: Set up Node.js
+      - name: Seed a broken Node cache entry (cache-hit path)
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="${{ steps.target.outputs.version }}"
+          rm -rf "$RUNNER_TOOL_CACHE/node/$version"
+          cache_dir="$RUNNER_TOOL_CACHE/node/$version/x64"
+          mkdir -p "$cache_dir/bin"             # empty bin/ -> PATH falls through
+          : > "$RUNNER_TOOL_CACHE/node/$version/x64.complete"   # marker SIBLING
+
+          echo "Seeded cache layout:"
+          ls -la "$RUNNER_TOOL_CACHE/node/$version"
+          ls -la "$cache_dir/bin" || true
+
+      - name: Set up Node.js (should "find in cache" the broken entry)
+        id: setup
         uses: actions/setup-node@v6
         with:
-          node-version: '25.0.0'
+          node-version: ${{ steps.target.outputs.version }}
+          architecture: x64
 
-      - name: Show active Node version
+      - name: Show what setup-node "installed"
         shell: bash
         run: |
-          which node
-          node -v
-          echo "PATH entry used by setup-node should have been $RUNNER_TOOL_CACHE/node/25.0.0/x64/bin"
+          echo "PATH=$PATH"
+          echo "which node: $(which node)"
+          echo "node -v:    $(node -v)"
+          echo "expected:   v${{ steps.target.outputs.version }}"
+
+      - name: Assert the bug (fail if node on PATH != expected version)
+        shell: bash
+        run: |
+          expected="v${{ steps.target.outputs.version }}"
+          actual="$(node -v)"
+          if [ "$actual" != "$expected" ]; then
+            echo "::error::Reproduced #1556: setup-node reported success but \`node -v\` is $actual (expected $expected)."
+            exit 1
+          fi
+          echo "No fallthrough observed."
