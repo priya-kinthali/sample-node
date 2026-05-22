@@ -1,0 +1,36 @@
+name: Reproduce setup-node fallback
+
+on:
+  push:
+    branches:
+      - test-686
+  workflow_dispatch:
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Seed a broken Node cache entry
+        shell: bash
+        run: |
+          rm -rf "$RUNNER_TOOL_CACHE/node"
+          cache_dir="$RUNNER_TOOL_CACHE/node/25.0.0/x64"
+          mkdir -p "$cache_dir/bin"
+          touch "$cache_dir/.complete"
+          echo "Seeded broken cache at $cache_dir"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '25.0.0'
+
+      - name: Show active Node version
+        shell: bash
+        run: |
+          which node
+          node -v
+          echo "PATH entry used by setup-node should have been $RUNNER_TOOL_CACHE/node/25.0.0/x64/bin"
