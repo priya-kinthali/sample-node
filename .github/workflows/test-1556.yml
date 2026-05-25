@@ -1,9 +1,9 @@
 name: Reproduce setup-node silent fallthrough (#1556)
 
 on:
-  push:
-    branches:
-      - test-686
+  # push:
+  #   branches:
+  #     - test-686
   workflow_dispatch:
 
 jobs:
