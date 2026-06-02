@@ -31,7 +31,7 @@ jobs:
     - uses: actions/setup-node@v6
     # - uses: F-Secure-web/setup-node-1@only-use-mirror-token-for-manifest-if-set
       with:
-        node-version: '21'
+        node-version: 'lts/*'
         mirror: 'https://mirror.yandex.ru/mirrors/nodejs.org/'
         # mirror-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Verify Node.js installation
