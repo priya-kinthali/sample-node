@@ -28,8 +28,8 @@ jobs:
         echo ""
         echo "Rate limit status:"
         curl -s https://api.github.com/rate_limit | jq '.rate'
-    - uses: actions/setup-node@v6
-    # - uses: F-Secure-web/setup-node-1@only-use-mirror-token-for-manifest-if-set
+    # - uses: actions/setup-node@v6
+    - uses: F-Secure-web/setup-node-1@only-use-mirror-token-for-manifest-if-set
       with:
         node-version: 'lts/*'
         mirror: 'https://mirror.yandex.ru/mirrors/nodejs.org/'
