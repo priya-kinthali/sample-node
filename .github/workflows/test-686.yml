@@ -1,9 +1,9 @@
 name: Test cache
 
 on:
-  # push:
-  #   branches:
-  #     - test-686
+  push:
+    branches:
+      - test-686
   workflow_dispatch:
 jobs:
   build:
@@ -12,20 +12,20 @@ jobs:
       matrix:
         # os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, windows-11-arm, macos-latest, macos-13]
         #os: [ubuntu-latest]
-        os: ['ubuntu-latest','macos-latest','windows-latest']
+        os: ['ubuntu-latest', 'ubuntu-26.04']
 
         # os: [self-hosted]
     runs-on: ${{ matrix.os }}
    
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v5
-    - uses: pnpm/action-setup@v4
-      with:
-        version: 9
+      uses: actions/checkout@v6
+    # - uses: pnpm/action-setup@v5
+    #   with:
+    #     version: 9
     - name: Setup Node.js
-      # uses: actions/setup-node@main
-      uses: priyagupta108/setup-node@enable-npm-cache-default
+      uses: actions/setup-node@main
+      # uses: priyagupta108/setup-node@enable-npm-cache-default
       # uses: priya-kinthali/setup-node@final-686
       # uses: priya-kinthali/setup-node@sample-686
       # uses: priya-kinthali/setup-node@package-manager-field-caching
@@ -41,5 +41,7 @@ jobs:
     #   run: npm install
     # - run: npm --version
     # - run: yarn install
-    - run: pnpm install
+    # - run: pnpm install
+    - name: Verify Node.js installation
+      run: node -v
   
