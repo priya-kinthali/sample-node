@@ -1,5 +1,4 @@
-name: Test restore cache
-
+name: Test rate limit
 on:
   push:
     branches:
