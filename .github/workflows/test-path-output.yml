@@ -21,7 +21,7 @@ jobs:
       id: node
       uses: priya-kinthali/setup-node@test-1181
       with:
-        node-version: '24'
+        node-version: '22'
         cache: npm
 
     - run: echo "Cache dirs = ${{ steps.node.outputs.cache-paths }}"
