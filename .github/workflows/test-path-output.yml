@@ -17,6 +17,8 @@ jobs:
         # os: [self-hosted]
     runs-on: ${{ matrix.os }}
     steps:
+    - uses: actions/checkout@v6
+
     - name: Install Node.js
       id: node
       uses: priya-kinthali/setup-node@test-1181
