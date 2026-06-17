@@ -1,0 +1,27 @@
+name: Test restore cache
+
+on:
+  push:
+    branches:
+      - test-686
+  workflow_dispatch:
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        # os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, windows-11-arm, macos-latest, macos-13]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        # os: ['ubuntu-latest','macos-latest','windows-latest', 'ubuntu-24.04-arm', 'windows-11-arm', 'macos-15-intel']
+
+        # os: [self-hosted]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: Install Node.js
+      id: node
+      uses: priya-kinthali/setup-node@test-1181
+      with:
+        node-version: '24'
+        cache: npm
+
+    - run: echo "Cache dirs = ${{ steps.node.outputs.cache-paths }}"
