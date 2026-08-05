@@ -1,0 +1,35 @@
+name: Test mise.toml support
+
+on:
+  push:
+    branches:
+      - test-686
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest, macos-15-intel, ubuntu-24.04-arm]
+     
+    steps:
+      - uses: actions/checkout@v7
+            # Create a mise.toml with the Node version to use
+      - name: Create mise.toml
+        shell: bash
+        run: |
+          cat > mise.toml <<'EOF'
+          [tools]
+          node = "22.12"
+          EOF
+          cat mise.toml
+      # - uses: marco-ippolito/setup-node@fix-bearer-token
+      - uses: gperdomor/setup-node@feature/mise-support
+        with:
+          node-version-file: mise.toml
+
+      - name: Verify Node.js installation
+        run: node -v    
+      - run: npm i
