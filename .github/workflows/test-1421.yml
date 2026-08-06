@@ -1,4 +1,4 @@
-name: Test mise.toml support
+name: Test mise config file formats support
 
 on:
   push:
@@ -12,24 +12,77 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest, macos-15-intel, ubuntu-24.04-arm]
-     
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+          - macos-15-intel
+          - ubuntu-24.04-arm
+        config:
+          # --- mise.toml variants (TOML [tools] format) ---
+          - name: mise.toml
+            file: mise.toml
+            format: toml
+          - name: .mise.toml
+            file: .mise.toml
+            format: toml
+          - name: mise.local.toml
+            file: mise.local.toml
+            format: toml
+          - name: .mise.local.toml
+            file: .mise.local.toml
+            format: toml
+          # --- environment-specific TOML ---
+          - name: mise.production.toml
+            file: mise.production.toml
+            format: toml
+          # --- .config directory variants ---
+          - name: .config/mise.toml
+            file: .config/mise.toml
+            format: toml
+          - name: .config/mise/config.toml
+            file: .config/mise/config.toml
+            format: toml
+          # --- asdf-compatible plain-text format ---
+          - name: .tool-versions
+            file: .tool-versions
+            format: tool-versions
+
+    name: ${{ matrix.os }} / ${{ matrix.config.name }}
+
     steps:
       - uses: actions/checkout@v7
-            # Create a mise.toml with the Node version to use
-      - name: Create mise.toml
+
+      - name: Create ${{ matrix.config.name }}
         shell: bash
         run: |
-          cat > mise.toml <<'EOF'
+          set -euo pipefail
+          # Ensure parent directory exists (for .config/mise/... paths)
+          mkdir -p "$(dirname "${{ matrix.config.file }}")"
+
+          if [ "${{ matrix.config.format }}" = "toml" ]; then
+            cat > "${{ matrix.config.file }}" <<'EOF'
           [tools]
           node = "22.12"
           EOF
-          cat mise.toml
-      # - uses: marco-ippolito/setup-node@fix-bearer-token
+          else
+            cat > "${{ matrix.config.file }}" <<'EOF'
+          nodejs 22.12
+          EOF
+          fi
+
+          echo "----- ${{ matrix.config.file }} -----"
+          cat "${{ matrix.config.file }}"
+
       - uses: gperdomor/setup-node@feature/mise-support
         with:
-          node-version-file: mise.toml
+          node-version-file: ${{ matrix.config.file }}
 
       - name: Verify Node.js installation
-        run: node -v    
+        shell: bash
+        run: |
+          node -v
+          echo "Expected major version: 22"
+          node -v | grep -q '^v22\.' || { echo "Unexpected Node version"; exit 1; }
+
       - run: npm i
