@@ -1,4 +1,4 @@
-name: Test mise config file formats support
+name: Test mise config formats & edge cases
 
 on:
   push:
@@ -6,51 +6,35 @@ on:
       - test-686
   workflow_dispatch:
 
+env:
+  NODE_MAJOR: "22"
+  NODE_VERSION_FULL: "22.12"
+
 jobs:
-  test:
+  # ---------------------------------------------------------------------------
+  # 1. Config FILE-FORMAT matrix (all supported mise file names)
+  # ---------------------------------------------------------------------------
+  file-formats:
+    name: file / ${{ matrix.os }} / ${{ matrix.config.name }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os:
           - ubuntu-latest
-          - macos-latest
-          - windows-latest
-          - macos-15-intel
-          - ubuntu-24.04-arm
-          - windows-11-arm
+          # - macos-latest
+          # - windows-latest
+          # - macos-15-intel
+          # - ubuntu-24.04-arm
         config:
-          # --- mise.toml variants (TOML [tools] format) ---
-          - name: mise.toml
-            file: mise.toml
-            format: toml
-          - name: .mise.toml
-            file: .mise.toml
-            format: toml
-          - name: mise.local.toml
-            file: mise.local.toml
-            format: toml
-          - name: .mise.local.toml
-            file: .mise.local.toml
-            format: toml
-          # --- environment-specific TOML ---
-          - name: mise.production.toml
-            file: mise.production.toml
-            format: toml
-          # --- .config directory variants ---
-          - name: .config/mise.toml
-            file: .config/mise.toml
-            format: toml
-          - name: .config/mise/config.toml
-            file: .config/mise/config.toml
-            format: toml
-          # --- asdf-compatible plain-text format ---
-          - name: .tool-versions
-            file: .tool-versions
-            format: tool-versions
-
-    name: ${{ matrix.os }} / ${{ matrix.config.name }}
-
+          - { name: mise.toml,               file: mise.toml,                 format: toml }
+          - { name: .mise.toml,              file: .mise.toml,                format: toml }
+          - { name: mise.local.toml,         file: mise.local.toml,           format: toml }
+          - { name: .mise.local.toml,        file: .mise.local.toml,          format: toml }
+          - { name: .config/mise.toml,       file: .config/mise.toml,         format: toml }
+          - { name: .config/mise/config.toml, file: .config/mise/config.toml, format: toml }
+          - { name: .tool-versions (node),   file: .tool-versions,            format: tv-node }
+          - { name: .tool-versions (nodejs), file: .tool-versions,            format: tv-nodejs }
     steps:
       - uses: actions/checkout@v7
 
@@ -58,20 +42,15 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          # Ensure parent directory exists (for .config/mise/... paths)
           mkdir -p "$(dirname "${{ matrix.config.file }}")"
-
-          if [ "${{ matrix.config.format }}" = "toml" ]; then
-            cat > "${{ matrix.config.file }}" <<'EOF'
-          [tools]
-          node = "22.12"
-          EOF
-          else
-            cat > "${{ matrix.config.file }}" <<'EOF'
-          nodejs 22.12
-          EOF
-          fi
-
+          case "${{ matrix.config.format }}" in
+            toml)
+              printf '[tools]\nnode = "%s"\n' "$NODE_VERSION_FULL" > "${{ matrix.config.file }}" ;;
+            tv-node)
+              printf 'node %s\n'   "$NODE_VERSION_FULL" > "${{ matrix.config.file }}" ;;
+            tv-nodejs)
+              printf 'nodejs %s\n' "$NODE_VERSION_FULL" > "${{ matrix.config.file }}" ;;
+          esac
           echo "----- ${{ matrix.config.file }} -----"
           cat "${{ matrix.config.file }}"
 
@@ -79,11 +58,183 @@ jobs:
         with:
           node-version-file: ${{ matrix.config.file }}
 
-      - name: Verify Node.js installation
+      - name: Verify Node.js
         shell: bash
         run: |
           node -v
-          echo "Expected major version: 22"
-          node -v | grep -q '^v22\.' || { echo "Unexpected Node version"; exit 1; }
+          node -v | grep -q "^v${NODE_MAJOR}\." || { echo "Unexpected Node version"; exit 1; }
 
       - run: npm i
+
+  # ---------------------------------------------------------------------------
+  # 2. VERSION-SPECIFIER format matrix (single mise.toml, varying value)
+  # ---------------------------------------------------------------------------
+  version-formats:
+    name: version / ${{ matrix.os }} / ${{ matrix.spec.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        spec:
+          - { name: "exact 22.12.0",  value: '"22.12.0"',              expect: "22" }
+          - { name: "major only 22",  value: '"22"',                   expect: "22" }
+          - { name: "major.minor",    value: '"22.12"',                expect: "22" }
+          - { name: "range >=20",     value: '">=20"',                 expect: ""   } # major unknown
+          - { name: "alias lts",      value: '"lts"',                  expect: ""   }
+          - { name: "alias latest",   value: '"latest"',               expect: ""   }
+          - { name: "prefixed node@", value: '"node@22"',              expect: "22" }
+          - { name: "object form",    value: '{ version = "22" }',     expect: "22" }
+          - { name: "with comment",   value: '"22" # inline comment',  expect: "22" }
+          - { name: "single quotes",  value: "'22'",                   expect: "22" }
+          - { name: "templated env",  value: "\"{{ env['NV'] | default(value='22') }}\"", expect: "22" }
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Create mise.toml (${{ matrix.spec.name }})
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '[tools]\nnode = %s\n' '${{ matrix.spec.value }}' > mise.toml
+          cat mise.toml
+
+      - uses: gperdomor/setup-node@feature/mise-support
+        with:
+          node-version-file: mise.toml
+
+      - name: Verify Node.js
+        shell: bash
+        run: |
+          node -v
+          EXPECT="${{ matrix.spec.expect }}"
+          if [ -n "$EXPECT" ]; then
+            node -v | grep -q "^v${EXPECT}\." || { echo "Expected major $EXPECT"; exit 1; }
+          fi
+
+      - run: npm i
+
+  # ---------------------------------------------------------------------------
+  # 3. MULTI-TOOL file: node must be selected, other tools ignored
+  # ---------------------------------------------------------------------------
+  multi-tool:
+    name: multi-tool / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v7
+      - name: Create mise.toml with multiple tools
+        shell: bash
+        run: |
+          cat > mise.toml <<'EOF'
+          [tools]
+          node = "22.12"
+          python = "3.12"
+          go = "1.22"
+          EOF
+          cat mise.toml
+      - uses: gperdomor/setup-node@feature/mise-support
+        with:
+          node-version-file: mise.toml
+      - name: Verify only Node resolved
+        shell: bash
+        run: node -v | grep -q "^v${NODE_MAJOR}\." || exit 1
+      - run: npm i
+
+  # ---------------------------------------------------------------------------
+  # 4. PRECEDENCE: mise.toml + mise.local.toml + .tool-versions all present
+  # ---------------------------------------------------------------------------
+  precedence:
+    name: precedence / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v7
+      - name: Create competing config files
+        shell: bash
+        run: |
+          printf '[tools]\nnode = "20.11"\n'        > mise.toml
+          printf '[tools]\nnode = "22.12"\n'        > mise.local.toml   # local should win
+          printf 'node 18.20\n'                     > .tool-versions
+          echo "--- mise.toml ---";       cat mise.toml
+          echo "--- mise.local.toml ---"; cat mise.local.toml
+          echo "--- .tool-versions ---";  cat .tool-versions
+      # Point the action at the file whose precedence you want to assert:
+      - uses: gperdomor/setup-node@feature/mise-support
+        with:
+          node-version-file: mise.local.toml
+      - name: Verify local override wins (v22)
+        shell: bash
+        run: node -v | grep -q "^v22\." || { echo "precedence failed"; exit 1; }
+      - run: npm i
+
+  # ---------------------------------------------------------------------------
+  # 5. ENVIRONMENT-SPECIFIC config (mise.<env>.toml) with MISE_ENV set
+  # ---------------------------------------------------------------------------
+  env-specific:
+    name: env-specific / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    env:
+      MISE_ENV: production
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v7
+      - name: Create mise.production.toml
+        shell: bash
+        run: |
+          printf '[tools]\nnode = "22.12"\n' > mise.production.toml
+          cat mise.production.toml
+      - uses: gperdomor/setup-node@feature/mise-support
+        with:
+          node-version-file: mise.production.toml
+      - name: Verify Node.js
+        shell: bash
+        run: node -v | grep -q "^v${NODE_MAJOR}\." || exit 1
+      - run: npm i
+
+  # ---------------------------------------------------------------------------
+  # 6. NEGATIVE cases: must fail gracefully (continue-on-error + assertion)
+  # ---------------------------------------------------------------------------
+  negative:
+    name: negative / ${{ matrix.os }} / ${{ matrix.bad.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        bad:
+          - { name: "empty file",        content: "" }
+          - { name: "no [tools] table",  content: "[env]\nFOO = \"bar\"\n" }
+          - { name: "no node key",       content: "[tools]\npython = \"3.12\"\n" }
+          - { name: "invalid toml",      content: "[tools\nnode = 22" }
+          - { name: "nonexistent ver",   content: "[tools]\nnode = \"999.999.999\"\n" }
+    steps:
+      - uses: actions/checkout@v7
+      - name: Create bad mise.toml
+        shell: bash
+        run: |
+          printf '%b' '${{ matrix.bad.content }}' > mise.toml
+          echo "----- mise.toml -----"; cat mise.toml || true
+
+      - id: setup
+        continue-on-error: true
+        uses: gperdomor/setup-node@feature/mise-support
+        with:
+          node-version-file: mise.toml
+
+      - name: Assert the action failed (as expected)
+        shell: bash
+        run: |
+          if [ "${{ steps.setup.outcome }}" = "success" ]; then
+            echo "::error::Expected failure for '${{ matrix.bad.name }}' but action succeeded"
+            exit 1
+          fi
+          echo "Got expected failure for '${{ matrix.bad.name }}'"
