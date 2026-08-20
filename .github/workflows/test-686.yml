@@ -23,6 +23,24 @@ jobs:
     # - uses: pnpm/action-setup@v5
     #   with:
     #     version: 9
+          # 1. Install Nix
+    - name: Install Nix
+      uses: cachix/install-nix-action@v27
+      with:
+        nix_path: nixpkgs=channel:nixos-unstable
+          # 2. Install Node.js via Nix and expose it on PATH for later steps
+    - name: Install Node via Nix
+      run: |
+        nix profile install nixpkgs#nodejs_22
+        echo "Nix node path: $(which node)"
+        node -v
+        # persist Nix profile bin on PATH for subsequent steps
+        echo "$HOME/.nix-profile/bin" >> "$GITHUB_PATH"
+          # 3. Record which Node is active BEFORE setup-node
+    - name: Node before setup-node
+      run: |
+        echo "which node: $(which node)"
+        echo "version: $(node -v)"
     - name: Setup Node.js
       uses: actions/setup-node@v7
       # uses: priyagupta108/setup-node@enable-npm-cache-default
@@ -37,8 +55,11 @@ jobs:
         # cache-dependency-path: subdir/pnpm-lock.yaml
         # enable-package-manager-cache: true
     # - run: npm ci
-    - name: Verify Node.js installation
-      run: node -v
+      # 5. Record which Node is active AFTER setup-node
+    - name: Node after setup-node
+      run: |
+        echo "which node: $(which node)"
+        echo "version: $(node -v)"
     - name: Install dependencies
       run: npm install
     # - run: npm --version
