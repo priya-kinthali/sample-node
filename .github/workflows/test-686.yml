@@ -31,7 +31,7 @@ jobs:
           # 2. Install Node.js via Nix and expose it on PATH for later steps
     - name: Install Node via Nix
       run: |
-        nix profile install nixpkgs#nodejs_23
+        nix profile install nixpkgs#nodejs_24
         echo "Nix node path: $(which node)"
         node -v
         # persist Nix profile bin on PATH for subsequent steps
