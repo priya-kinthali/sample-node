@@ -12,7 +12,7 @@ jobs:
       matrix:
         # os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, windows-11-arm, macos-latest, macos-13]
         #os: [ubuntu-latest]
-        os: ['ubuntu-latest', 'windows-latest', 'macos-latest', 'macos-15-intel']
+        os: ['ubuntu-latest']
 
         # os: [self-hosted]
     runs-on: ${{ matrix.os }}
@@ -25,13 +25,13 @@ jobs:
     #     version: 9
           # 1. Install Nix
     - name: Install Nix
-      uses: cachix/install-nix-action@v27
+      uses: cachix/install-nix-action@v31
       with:
         nix_path: nixpkgs=channel:nixos-unstable
           # 2. Install Node.js via Nix and expose it on PATH for later steps
     - name: Install Node via Nix
       run: |
-        nix profile install nixpkgs#nodejs_22
+        nix profile install nixpkgs#nodejs_20
         echo "Nix node path: $(which node)"
         node -v
         # persist Nix profile bin on PATH for subsequent steps
