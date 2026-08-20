@@ -1,9 +1,9 @@
 name: Test mise config formats & edge cases
 
 on:
-  push:
-    branches:
-      - test-686
+  # push:
+  #   branches:
+  #     - test-686
   workflow_dispatch:
 
 env:
