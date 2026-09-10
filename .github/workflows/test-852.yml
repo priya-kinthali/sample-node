@@ -1,0 +1,17 @@
+name: Repro absolute path bug
+on:
+  push:
+    branches:
+      - test-686
+  workflow_dispatch:
+
+jobs:
+  repro:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout consumer repo
+        uses: actions/checkout@v7
+
+      - name: Run the composite action (which passes an absolute path)
+        # Replace YOUR-USERNAME with your GitHub username
+        uses: priya-kinthali/sample-python@test-973
