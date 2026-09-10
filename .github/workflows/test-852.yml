@@ -1,4 +1,22 @@
-name: Repro absolute path bug
+# name: Repro absolute path bug
+# on:
+#   push:
+#     branches:
+#       - test-686
+#   workflow_dispatch:
+
+# jobs:
+#   repro:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout consumer repo
+#         uses: actions/checkout@v7
+
+#       - name: Run the composite action (which passes an absolute path)
+#         # Replace YOUR-USERNAME with your GitHub username
+#         uses: priya-kinthali/sample-python@test-973
+name: setup-node node-version-file — all edge cases
+
 on:
   push:
     branches:
@@ -6,12 +24,84 @@ on:
   workflow_dispatch:
 
 jobs:
-  repro:
+  # ---- Edge case 1: ABSOLUTE path via your composite action (the actual bug) ----
+  absolute-path-composite:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Run composite action (absolute node-version-file)
+        uses: priya-kinthali/sample-python@test-973
+      - run: node -v        # expect v22.x  (.nvmrc in the action repo = 22)
+        shell: bash
+
+  # ---- Edge case 2: RELATIVE path at repo root (regression check) ----
+  relative-root:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: v-mahabaleshwars/setup-node@feature/852-absolute-path
+        with:
+          node-version-file: .nvmrc
+      - run: node -v        # expect v23.11.0  (needs a root .nvmrc = 23 in THIS repo)
+        shell: bash
+
+  # ---- Edge case 3: RELATIVE path in a subfolder ----
+  relative-subfolder:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout consumer repo
-        uses: actions/checkout@v7
+      - uses: actions/checkout@v5
+      - uses: v-mahabaleshwars/setup-node@feature/852-absolute-path
+        with:
+          node-version-file: config/.node-version
+      - run: node -v        # expect v20.x  (needs config/.node-version = 20 in THIS repo)
 
-      - name: Run the composite action (which passes an absolute path)
-        # Replace YOUR-USERNAME with your GitHub username
-        uses: priya-kinthali/sample-python@test-973
+  # ---- Edge case 4: ABSOLUTE path built explicitly with $GITHUB_WORKSPACE ----
+  absolute-in-workspace:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: v-mahabaleshwars/setup-node@feature/852-absolute-path
+        with:
+          node-version-file: ${{ github.workspace }}/.nvmrc
+      - run: node -v        # expect v18.x  (absolute path inside workspace, uses root .nvmrc)
+        shell: bash
+
+  # ---- Edge case 5: NON-EXISTENT file must fail cleanly (negative test) ----
+  missing-file:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - id: setup
+        continue-on-error: true
+        uses: v-mahabaleshwars/setup-node@feature/852-absolute-path
+        with:
+          node-version-file: does/not/exist/.nvmrc
+      - name: Assert the step failed
+        if: steps.setup.outcome == 'success'
+        run: echo "ERROR expected failure but step succeeded" && exit 1
+      - name: Confirm expected failure
+        if: steps.setup.outcome == 'failure'
+        run: echo "OK missing file correctly failed"
+
+  # ---- Edge case 6: node-version + node-version-file both set (warning, version wins) ----
+  both-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: v-mahabaleshwars/setup-node@feature/852-absolute-path
+        with:
+          node-version: 20
+          node-version-file: .nvmrc   # 18 — should be ignored with a warning
+      - run: node -v        # expect v20.x (node-version wins)
