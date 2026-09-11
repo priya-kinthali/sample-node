@@ -173,3 +173,10 @@ jobs:
           with:
             node-version-file: ${{ github.workspace }}/volta-pkg/package.json
         - run: node -v                  # expect the version from volta.node (e.g. v20.11.1)
+  absolute-nested-composite:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v5
+        - name: Run composite action that reads a nested absolute version file
+          uses: priya-kinthali/sample-python@test-973
+        - run: node -v                  # expect the nested/.node-version value from the action repo
