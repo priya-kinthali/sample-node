@@ -105,3 +105,71 @@ jobs:
           node-version: 20
           node-version-file: .nvmrc   # 18 — should be ignored with a warning
       - run: node -v        # expect v20.x (node-version wins)
+  # ---- Edge case 7: ABSOLUTE path to .tool-versions file ----
+  absolute-tool-versions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: v-mahabaleshwars/setup-node@feature/852-absolute-path
+        with:
+          node-version-file: ${{ github.workspace }}/.tool-versions
+      - run: node -v        # expect v18.x  (absolute path to .tool-versions, uses root .tool-versions)
+  empty-version-file:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: v-mahabaleshwars/setup-node@feature/852-absolute-path
+        with:
+          node-version: 20            # fallback that should actually be used
+          node-version-file: ''       # empty → must be ignored, not resolved to a dir
+      - run: node -v                  # expect v20.x (came from node-version, not the empty file)
+  trailing-whitespace-path:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: v-mahabaleshwars/setup-node@feature/852-absolute-path
+        with:
+          # NOTE the intentional trailing space after .nvmrc
+          node-version-file: "${{ github.workspace }}/.nvmrc "
+      - run: node -v                  # expect the root .nvmrc version (path tolerated despite trailing space)
+  check-latest-absolute:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: v-mahabaleshwars/setup-node@feature/852-absolute-path
+        with:
+          node-version-file: ${{ github.workspace }}/.nvmrc
+          check-latest: true          # force querying newest matching release
+      - run: node -v                  # expect latest patch of the major in root .nvmrc
+  absolute-with-traversal:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v7
+        - uses: v-mahabaleshwars/setup-node@feature/852-absolute-path
+          with:
+            node-version-file: ${{ github.workspace }}/../sample-node/.nvmrc
+        - run: node -v                  # expect the root .nvmrc version (path normalized back into workspace)
+  windows-absolute:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: v-mahabaleshwars/setup-node@feature/852-absolute-path
+        with:
+          node-version-file: ${{ github.workspace }}\.nvmrc   # backslash, Windows-style absolute
+      - run: node -v                  # expect the root .nvmrc version
+  absolute-package-json-engines:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: v-mahabaleshwars/setup-node@feature/852-absolute-path
+        with:
+          node-version-file: ${{ github.workspace }}/engines-pkg/package.json
+      - run: node -v                  # expect the version from engines.node (e.g. v18.20.4)
+  absolute-package-json-volta:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v7
+        - uses: v-mahabaleshwars/setup-node@feature/852-absolute-path
+          with:
+            node-version-file: ${{ github.workspace }}/volta-pkg/package.json
+        - run: node -v                  # expect the version from volta.node (e.g. v20.11.1)
