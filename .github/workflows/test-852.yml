@@ -32,7 +32,7 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - name: Run composite action (absolute node-version-file)
         uses: priya-kinthali/sample-python@test-973
       - run: node -v        # expect v22.x  (.nvmrc in the action repo = 22)
@@ -46,7 +46,7 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: v-mahabaleshwars/setup-node@feature/852-absolute-path
         with:
           node-version-file: .nvmrc
@@ -57,7 +57,7 @@ jobs:
   relative-subfolder:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: v-mahabaleshwars/setup-node@feature/852-absolute-path
         with:
           node-version-file: config/.node-version
@@ -71,7 +71,7 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: v-mahabaleshwars/setup-node@feature/852-absolute-path
         with:
           node-version-file: ${{ github.workspace }}/.nvmrc
@@ -82,7 +82,7 @@ jobs:
   missing-file:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - id: setup
         continue-on-error: true
         uses: v-mahabaleshwars/setup-node@feature/852-absolute-path
@@ -99,7 +99,7 @@ jobs:
   both-inputs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: v-mahabaleshwars/setup-node@feature/852-absolute-path
         with:
           node-version: 20
